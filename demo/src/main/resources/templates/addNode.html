@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Cluster to the Simulator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/addnode}" th:object="${node}" method="post">
+    <p>Cluster ID: <input type="text" th:field="*{cluster_id}" /></p>
+    <p>Node name: <input type="text" th:field="*{name}" /></p>
+    <p>Floor: <input type="text" th:field="*{floor}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
