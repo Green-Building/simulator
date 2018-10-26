@@ -7,8 +7,28 @@
 </head>
 <body>
 <h1>Form</h1>
+<table border="2" align="center">
+    <tr>
+        <td>Cluster ID</td>
+        <td>Cluster Name</td>
+        <td>Cluster Address</td>
+    </tr>
+    <tr th:each ="i:${clusters}">
+        <td th:text = "${i.id}"></td>
+        <td th:text = "${i.name}"></td>
+        <td th:text = "${i.address}"></td>
+    </tr>
+</table>
+
 <form action="#" th:action="@{/addnode}" th:object="${node}" method="post">
-    <p>Cluster ID: <input type="text" th:field="*{cluster_id}" /></p>
+    <div>
+        <label>Please select an Address for the cluster:
+            <select th:field = "*{cluster_id}" th:remove ="all-but-first">
+                <option th:each="i: ${clusters}"
+                        th:value="${i.id}" th:text="${i.address}"> Cluster</option>
+            </select>
+        </label>
+    </div>
     <p>Node name: <input type="text" th:field="*{name}" /></p>
     <p>Floor: <input type="text" th:field="*{floor}" /></p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>

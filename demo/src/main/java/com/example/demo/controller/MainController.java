@@ -26,6 +26,7 @@ public class MainController {
     @GetMapping("addnode")
     public String addNodeForm (Model model) {
         model.addAttribute("node", new Node());
+        model.addAttribute("clusters", clusterRepository.findAll());
         return "addNode";
     }
 
