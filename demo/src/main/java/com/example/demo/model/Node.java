@@ -12,7 +12,7 @@ public class Node {
     private Long id;
     private String name;
     private String status;
-    private String floor;
+    private String room;
     private Long clusterId;
 
     public Long getId() {
@@ -31,12 +31,20 @@ public class Node {
         this.name = name;
     }
 
-    public String getFloor() {
-        return floor;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFloor(String floor) {
-        this.floor = floor;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public Long getClusterId() {
@@ -47,11 +55,4 @@ public class Node {
         this.clusterId = clusterId;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

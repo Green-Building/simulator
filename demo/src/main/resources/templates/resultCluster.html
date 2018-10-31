@@ -9,7 +9,9 @@
         <h1>Result</h1>
         <p th:text="'id:' + ${cluster.id}" />
         <p th:text="'name: ' + ${cluster.name}" />
-        <p th:text="'address: ' + ${cluster.address}" />
+        <p th:text="'floor: ' + ${cluster.floor}" />
+        <p th:text="'status: ' + ${cluster.status}" />
+        <p th:text="'Building Id: ' + ${cluster.buildingId}" />
         <a href="/add/cluster">Submit another cluster</a>
 </body>
 </html>

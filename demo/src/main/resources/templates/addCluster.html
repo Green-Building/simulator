@@ -6,10 +6,40 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+
+<h1>All The buildings</h1>
+<table border="1" align="center">
+    <tr>
+        <td>Cluster ID</td>
+        <td>Cluster Address</td>
+        <td>Cluster Longitude</td>
+        <td>Cluster Latitude</td>
+    </tr>
+    <tr th:each ="i:${buildings}">
+        <td th:text = "${i.id}"></td>
+        <td th:text = "${i.address}"></td>
+        <td th:text = "${i.longitude}"></td>
+        <td th:text = "${i.latitude}"></td>
+    </tr>
+</table>
+
 <h1>Form</h1>
 <form action="#" th:action="@{/add/cluster}" th:object="${cluster}" method="post">
+
     <p>Cluster name: <input type="text" th:field="*{name}" /></p>
-    <p>Cluster Address: <input type="text" th:field="*{address}" /></p>
+
+    <div>
+        <label>Please select Building for the cluster:
+            <select th:field = "*{buildingId}" th:remove ="all-but-first">
+                <option th:each="i: ${buildings}"
+                        th:value="${i.id}" th:text="${i.address}"> Cluster</option>
+            </select>
+        </label>
+    </div>
+
+
+    <p>Floor: <input type="text" th:field="*{floor}" /></p>
+
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

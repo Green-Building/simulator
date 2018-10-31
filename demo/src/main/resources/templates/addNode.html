@@ -12,26 +12,26 @@
     <tr>
         <td>Cluster ID</td>
         <td>Cluster Name</td>
-        <td>Cluster Address</td>
+        <td>Cluster Floor</td>
     </tr>
     <tr th:each ="i:${clusters}">
         <td th:text = "${i.id}"></td>
         <td th:text = "${i.name}"></td>
-        <td th:text = "${i.address}"></td>
+        <td th:text = "${i.floor}"></td>
     </tr>
 </table>
 
 <form action="#" th:action="@{/add/node}" th:object="${node}" method="post">
     <div>
-        <label>Please select an Address for the cluster:
+        <label>Please select an Floor for the Node:
             <select th:field = "*{clusterId}" th:remove ="all-but-first">
                 <option th:each="i: ${clusters}"
-                        th:value="${i.id}" th:text="${i.address}"> Cluster</option>
+                        th:value="${i.id}" th:text="${i.floor}"> Cluster</option>
             </select>
         </label>
     </div>
     <p>Node name: <input type="text" th:field="*{name}" /></p>
-    <p>Floor: <input type="text" th:field="*{floor}" /></p>
+    <p>Room: <input type="text" th:field="*{room}" /></p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

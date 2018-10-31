@@ -11,8 +11,9 @@ public class Cluster {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String address;
+    private String floor;
     private String status;
+    private Long buildingId;
 
     public Long getId() {
         return id;
@@ -30,12 +31,12 @@ public class Cluster {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getFloor() {
+        return floor;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setFloor(String floor) {
+        this.floor = floor;
     }
 
     public String getStatus() {
@@ -46,4 +47,11 @@ public class Cluster {
         this.status = status;
     }
 
+    public Long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
+    }
 }

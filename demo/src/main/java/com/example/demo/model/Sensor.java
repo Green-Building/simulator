@@ -12,7 +12,6 @@ public class Sensor {
     private Long id;
     private String name;
     private String type;
-    private String room;
     private String status;
 
     private Long nodeId;
@@ -42,6 +41,14 @@ public class Sensor {
         this.type = type;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Long getNodeId() {
         return nodeId;
     }
@@ -58,20 +65,5 @@ public class Sensor {
         this.clusterId = clusterId;
     }
 
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
 
