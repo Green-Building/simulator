@@ -6,8 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Form</h1>
-<table border="2" align="center">
+
+<h1>All The Clusters</h1>
+<table border="1" align="center">
     <tr>
         <td>Cluster ID</td>
         <td>Cluster Name</td>
@@ -20,10 +21,10 @@
     </tr>
 </table>
 
-<form action="#" th:action="@{/addnode}" th:object="${node}" method="post">
+<form action="#" th:action="@{/add/node}" th:object="${node}" method="post">
     <div>
         <label>Please select an Address for the cluster:
-            <select th:field = "*{cluster_id}" th:remove ="all-but-first">
+            <select th:field = "*{clusterId}" th:remove ="all-but-first">
                 <option th:each="i: ${clusters}"
                         th:value="${i.id}" th:text="${i.address}"> Cluster</option>
             </select>

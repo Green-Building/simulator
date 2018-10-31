@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Add a Sensor to the simultor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+
+<h2>Cluster:</h2>
+<table border="1" align="center">
+    <tr>
+        <td>Cluster ID</td>
+        <td>Cluster Name</td>
+        <td>Cluster Address</td>
+    </tr>
+    <tr th:each ="i:${clusters}">
+        <td th:text = "${i.id}"></td>
+        <td th:text = "${i.name}"></td>
+        <td th:text = "${i.address}"></td>
+    </tr>
+</table>
+<p><br></p>
+
+<h2>Node:</h2>
+<table border="1" align="center">
+    <tr>
+        <td>Node ID</td>
+        <td>Node Name</td>
+        <td>Cluster ID</td>
+        <td>Floor</td>
+    </tr>
+    <tr th:each ="node:${nodes}">
+        <td th:text = "${node.id}"></td>
+        <td th:text = "${node.name}"></td>
+        <td th:text = "${node.clusterId}"></td>
+        <td th:text = "${node.floor}"></td>
+    </tr>
+</table>
+<p><br></p>
+
+<form action="#" th:action="@{/add/sensor}" th:object="${sensor}" method="post">
+    <div>
+        <label>Please select an node for the sensor:<br>
+            <select id="node" th:field = "*{nodeId}" th:remove ="all-but-first" >
+                <option
+                        th:each="i: ${nodes}" th:value="${i.id}" th:text="${i.id}"> Node
+                </option>
+            </select>
+        </label>
+    </div>
+    <p>Sensor name: <input type="text" th:field="*{name}" /></p>
+    <p>Type: <input type="text" th:field="*{type}" /></p>
+    <p>Room: <input type="text" th:field="*{room}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+
+</form>
+</body>
+</html>

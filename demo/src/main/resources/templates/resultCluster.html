@@ -7,8 +7,9 @@
 </head>
     <body>
         <h1>Result</h1>
+        <p th:text="'id:' + ${cluster.id}" />
         <p th:text="'name: ' + ${cluster.name}" />
         <p th:text="'address: ' + ${cluster.address}" />
-        <a href="/addcluster">Submit another message</a>
+        <a href="/add/cluster">Submit another cluster</a>
 </body>
 </html>

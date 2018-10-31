@@ -7,19 +7,18 @@ import javax.persistence.Id;
 
 @Entity
 public class Cluster {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
+    private Long id;
     private String name;
     private String address;
+    private String status;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,4 +37,13 @@ public class Cluster {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

@@ -6,13 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Node {
+public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String type;
+    private String room;
     private String status;
-    private String floor;
+
+    private Long nodeId;
     private Long clusterId;
 
     public Long getId() {
@@ -31,12 +34,20 @@ public class Node {
         this.name = name;
     }
 
-    public String getFloor() {
-        return floor;
+    public String getType() {
+        return type;
     }
 
-    public void setFloor(String floor) {
-        this.floor = floor;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(Long nodeId) {
+        this.nodeId = nodeId;
     }
 
     public Long getClusterId() {
@@ -47,6 +58,14 @@ public class Node {
         this.clusterId = clusterId;
     }
 
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -55,3 +74,4 @@ public class Node {
         this.status = status;
     }
 }
+
