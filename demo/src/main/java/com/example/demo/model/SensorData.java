@@ -4,27 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 
 @Entity
 public class SensorData {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long clusterId;
     private Long nodeId;
     private Long sensorId;
-
     private String sensorType;
     private Double sensorData;
-
-    public SensorData() {
-
-    }
-
-    public void updateSensorDataRandom() {
-        this.sensorData = Math.random()*10;
-    }
+    private Date date;
+    private String unit;
 
     public Long getId() {
         return id;
@@ -72,6 +66,38 @@ public class SensorData {
 
     public void setSensorData(Double sensorData) {
         this.sensorData = sensorData;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public String toString() {
+        return "SensorData{" +
+                "id=" + id +
+                ", clusterId=" + clusterId +
+                ", nodeId=" + nodeId +
+                ", sensorId=" + sensorId +
+                ", sensorType='" + sensorType + '\'' +
+                ", sensorData=" + sensorData +
+                '}';
+    }
+
+    public void updateSensorDataRandom() {
+        this.sensorData = Math.random()*10;
     }
 }
 

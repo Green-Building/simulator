@@ -7,7 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class MainController {
@@ -23,6 +27,12 @@ public class MainController {
     @Autowired
     private BuildingRepository buildingRepository;
 
+
+    /**
+     *
+     * @param model
+     * @return
+     */
 
     @CrossOrigin(origins = "*")
     @GetMapping("/add/building")
@@ -52,7 +62,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/add/cluster")
+    @PostMapping(value="/add/cluster")
     public String addclusterSubmit(@ModelAttribute Cluster cluster) {
         cluster.setStatus("active");
         clusterRepository.save(cluster);
@@ -112,8 +122,19 @@ public class MainController {
         sensorData.setSensorType(sensor.getType());
         sensorData.setSensorData(0.00);
         sensorData.setClusterId(sensor.getClusterId());
+        sensorData.setDate(new Date());
+        sensorData.setUnit("Default");
         sensorDataRepository.save(sensorData);
         return "resultSensor";
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/add/sensordata")
+    public String addsensordataSubmit(@ModelAttribute SensorData sensorData) {
+        System.out.println("receive data from client...");
+        System.out.println(sensorData.toString());
+        sensorDataRepository.save(sensorData);
+        return "resultSensorData";
     }
 
     @CrossOrigin(origins = "*")

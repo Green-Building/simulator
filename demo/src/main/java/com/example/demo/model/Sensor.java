@@ -17,6 +17,7 @@ public class Sensor {
     private Long nodeId;
     private Long clusterId;
 
+
     public Long getId() {
         return id;
     }
@@ -65,5 +66,16 @@ public class Sensor {
         this.clusterId = clusterId;
     }
 
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", nodeId=" + nodeId +
+                ", clusterId=" + clusterId +
+                '}';
+    }
 }
 
