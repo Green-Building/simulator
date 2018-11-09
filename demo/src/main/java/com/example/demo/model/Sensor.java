@@ -13,10 +13,8 @@ public class Sensor {
     private String name;
     private String type;
     private String status;
-
     private Long nodeId;
     private Long clusterId;
-
 
     public Long getId() {
         return id;

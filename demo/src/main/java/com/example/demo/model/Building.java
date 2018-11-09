@@ -10,9 +10,14 @@ public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String image_url;
     private String address;
-    private Long longitude;
-    private Long latitude;
+    private String city;
+    private String state;
+    private String zipcode;
+    private String num_of_floors;
+    private Double longitude;
+    private Double latitude;
 
     public Long getId() {
         return id;
@@ -20,6 +25,14 @@ public class Building {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getAddress() {
@@ -30,19 +43,51 @@ public class Building {
         this.address = address;
     }
 
-    public Long getLongitude() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getNum_of_floors() {
+        return num_of_floors;
+    }
+
+    public void setNum_of_floors(String num_of_floors) {
+        this.num_of_floors = num_of_floors;
+    }
+
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public Long getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 }
