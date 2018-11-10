@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.Cluster;
+import com.example.demo.SimulatingStructure.Cluster;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

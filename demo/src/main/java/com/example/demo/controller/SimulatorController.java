@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.*;
+import com.example.demo.Infrastructure.Building;
+import com.example.demo.Infrastructure.Floor;
+import com.example.demo.SensorData.SensorData;
+import com.example.demo.SimulatingStructure.Cluster;
+import com.example.demo.SimulatingStructure.Node;
+import com.example.demo.SimulatingStructure.Sensor;
 import com.example.demo.repository.*;
-import com.sun.xml.internal.rngom.dt.builtin.BuiltinDatatypeLibrary;
 import org.apache.http.impl.client.HttpClients;
-import org.hibernate.annotations.Parameter;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
@@ -14,17 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class MainController {
-
+public class SimulatorController {
     @Autowired
     private ClusterRepository clusterRepository;
     @Autowired
@@ -40,109 +41,50 @@ public class MainController {
     @Autowired
     private RoomRepository roomRepository;
 
-
-    @CrossOrigin(origins = "*")
-    @PostMapping("/buildings")
-    public @ResponseBody Building addBuilding(@RequestBody Building building) {
-        buildingRepository.save(building);
-
-        ClientHttpRequestFactory requestFactory = new
-                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-        //String url = "http://localhost:3010/buildings";
-        //String result = restTemplate.postForObject(url, building, String.class);
-        return building;
-    }
-
-    @CrossOrigin(origins = "*")
-    @GetMapping("/buildings/search/geocode")
-    //public @ResponseBody Iterable<Building> searchBuidlingByLatLng(@RequestParam final String longitude, @RequestParam final String latitude, @RequestParam String radius)
-    public @ResponseBody Iterable<Building> searchBuidlingByLatLng(@RequestParam final String longitude, @RequestParam final String latitude)
-    {
-        Double lat = Double.valueOf(latitude);
-        Double lng = Double.valueOf(longitude);
-        //Double distanceLimit = Double.valueOf(radius);
-        Double distanceLimit = Double.valueOf("5");
-        Double distanceRange;
-
-        Iterable<Building> buildings = buildingRepository.findAll();
-        List<Building> res = new LinkedList<>();
-
-        for (Building building : buildings) {
-            double pow1 = Math.pow(69.1 * (building.getLatitude() - lat), 2);
-            double pow2 = Math.pow(69.1 * (lng - building.getLongitude()) * Math.cos(building.getLatitude() / 57.3), 2);
-            distanceRange = pow1 + pow2;
-
-            if( distanceRange.compareTo(distanceLimit) < 0 ) {
-                res.add(building);
-            }
-        }
-        return res;
-    }
-
-    @CrossOrigin(origins = "*")
-    @GetMapping("/buildings/search/location")
-    public @ResponseBody Iterable<Building> searchBuidlingByLocation(@RequestParam final String city, @RequestParam final String state, @RequestParam final String zipcode)
-    {
-        Iterable<Building> buildings = buildingRepository.findAll();
-        List<Building> res = new LinkedList<>();
-
-        for ( Building building : buildings) {
-            if ( building.getZipcode().equalsIgnoreCase(zipcode) ) {
-                res.add(building);
-            }
-        }
-
-        if(res.size() == 0) {
-            for(Building building : buildings) {
-                if( building.getCity().equalsIgnoreCase(city)) {
-                    res.add(building);
-                }
-            }
-        }
-
-        return res;
-    }
-
-    @CrossOrigin(origins = "*")
-    @GetMapping("/buildings/{building_id}")
-    public @ResponseBody Building getbuidlingById (@RequestParam final String building_id)
-    {
-        Long buidlingId = Long.valueOf(building_id).longValue();
-        return buildingRepository.findById(buidlingId).get();
-    }
-
-
-    @CrossOrigin(origins = "*")
-    @PostMapping("/floors")
-    public @ResponseBody Floor addFloor(@RequestBody Floor floor)
-    {
-        floorRepository.save(floor);
-        return floor;
-    }
-
-    @CrossOrigin(origins = "*")
-    @PostMapping("/rooms")
-    public @ResponseBody Room addRoom(@RequestBody Room room)
-    {
-        roomRepository.save(room);
-        return room;
-    }
-
-
     @CrossOrigin(origins = "*")
     @PostMapping(value="/clusters")
-    public @ResponseBody Cluster addCluster(@ModelAttribute Cluster cluster) {
-        clusterRepository.save(cluster);
-
+    public @ResponseBody
+    Cluster addCluster(@RequestBody String json) {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
+        long buildingid = 0;
+        long floorid = 0;
+        String name = "";
+        String type = "";
+        String series_number = "";
+        Date install_time = new Date();
+        String status = null;
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(json);
+            buildingid = jsonObject.getLong("building_id");
+            floorid = jsonObject.getLong("floor_id");
+            name = jsonObject.getString("name");
+            type = jsonObject.getString("type");
+            series_number = jsonObject.getString("series_number");
+            status = jsonObject.getString("status");
+            Building building = buildingRepository.findById(buildingid).get();
+            Cluster cluster = new Cluster(building, floorid, name, type, series_number, install_time, status);
+            building.getClusters().add(cluster);
+            buildingRepository.save(building);
+            Set<Cluster> clusters = buildingRepository.findById(buildingid).get().getClusters();
+            long maxID = 0;
+            for (Cluster cluster0: clusters) {
+                long currentId = cluster0.getCluster_id();
+                if( currentId > maxID ) {
+                    maxID = currentId;
+                }
+            }
+            return clusterRepository.findById(maxID).get();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
         //String url = "http://localhost:3010/clusters";
         //String result = restTemplate.postForObject(url, cluster, String.class);
-
-        return cluster;
     }
 
     /**

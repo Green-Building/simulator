@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.Node;
+import com.example.demo.SimulatingStructure.Node;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -1,23 +1,10 @@
-package com.example.demo.scheduetask;
+package com.example.demo.SensorData;
 
-import com.example.demo.model.Cluster;
-import com.example.demo.model.Sensor;
-import com.example.demo.model.SensorData;
-import com.example.demo.repository.ClusterRepository;
-import com.example.demo.repository.SensorDataRepository;
-import com.example.demo.repository.SensorRepository;
-import org.apache.http.impl.client.HttpClients;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
-public class ScheduledTasks {
+public class ScheduledUploadData {
+    /**
     @Autowired
     SensorDataRepository sensorDataRepository;
     @Autowired
@@ -37,7 +24,7 @@ public class ScheduledTasks {
         Iterable<Cluster> clusters = clusterRepository.findAll();
         for (Cluster cluster: clusters) {
             if (cluster.getStatus().equals("active")) {
-                Long clusterId = cluster.getId();
+                Long clusterId = cluster.getCluster_id();
                 Iterable<SensorData> sensorDatas = sensorDataRepository.findSensorDataByClusterId(clusterId);
 
                 for (SensorData sensorData: sensorDatas) {
@@ -54,4 +41,5 @@ public class ScheduledTasks {
             }
         }
     }
+    **/
 }
