@@ -1,79 +1,65 @@
 package com.example.demo.SensorData;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+@JsonPropertyOrder({
+        "sensordata_id",
+        "sensor_id",
+        "node_id",
+        "cluster_id",
+        "unit",
+        "sensor_data",
+        "date"
+})
 
 @Entity
 public class SensorData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long clusterId;
-    private Long nodeId;
-    private Long sensorId;
-    private String sensorType;
-    private Double sensorData;
-    private Date date;
+    private long id;
+    private long sensor_id;
+    private long node_id;
+    private long cluster_id;
     private String unit;
+    private Double sensordata;
+    private Date date;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getClusterId() {
-        return clusterId;
+    public long getSensor_id() {
+        return sensor_id;
     }
 
-    public void setClusterId(Long clusterId) {
-        this.clusterId = clusterId;
+    public void setSensor_id(long sensor_id) {
+        this.sensor_id = sensor_id;
     }
 
-    public Long getNodeId() {
-        return nodeId;
+    public long getNode_id() {
+        return node_id;
     }
 
-    public void setNodeId(Long nodeId) {
-        this.nodeId = nodeId;
+    public void setNode_id(long node_id) {
+        this.node_id = node_id;
     }
 
-    public Long getSensorId() {
-        return sensorId;
+    public long getCluster_id() {
+        return cluster_id;
     }
 
-    public void setSensorId(Long sensorId) {
-        this.sensorId = sensorId;
-    }
-
-    public String getSensorType() {
-        return sensorType;
-    }
-
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-
-    public Double getSensorData() {
-        return sensorData;
-    }
-
-    public void setSensorData(Double sensorData) {
-        this.sensorData = sensorData;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCluster_id(long cluster_id) {
+        this.cluster_id = cluster_id;
     }
 
     public String getUnit() {
@@ -84,20 +70,20 @@ public class SensorData {
         this.unit = unit;
     }
 
-    @Override
-    public String toString() {
-        return "SensorData{" +
-                "id=" + id +
-                ", clusterId=" + clusterId +
-                ", nodeId=" + nodeId +
-                ", sensorId=" + sensorId +
-                ", sensorType='" + sensorType + '\'' +
-                ", sensorData=" + sensorData +
-                '}';
+    public Double getSensordata() {
+        return sensordata;
     }
 
-    public void updateSensorDataRandom() {
-        this.sensorData = Math.random()*10;
+    public void setSensordata(Double sensordata) {
+        this.sensordata = sensordata;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
 

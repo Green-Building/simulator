@@ -11,32 +11,37 @@ import java.util.List;
 
 public interface SensorDataRepository extends CrudRepository<SensorData, Long> {
 
-    @Query("select sd from SensorData sd where sd.clusterId = :clusterId")
-    List<SensorData> findSensorDataByClusterId(@Param("clusterId")Long clusterId);
+    @Query("select sd from SensorData sd where sd.cluster_id = :cluster_id")
+    List<SensorData> findSensorDataByClusterId(@Param("cluster_id")Long cluster_id);
+
+    @Query("select sd from SensorData sd where sd.sensor_id = :sensor_id")
+    SensorData findSensorDataBySensorId(@Param("sensor_id")Long sensor_id);
 
     @Transactional
     @Modifying
-    @Query("delete from SensorData sensorData where sensorData.clusterId = :clusterId")
-    void deleteSensorDataByClusterId(@Param("clusterId")Long clusterId);
+    @Query("delete from SensorData sensorData where sensorData.cluster_id = :cluster_id")
+    void deleteSensorDataByClusterId(@Param("cluster_id")Long cluster_id);
 
     @Transactional
     @Modifying
-    @Query("delete from SensorData sensorData where sensorData.nodeId = :nodeId")
-    void deleteSensorDataByNodeId(@Param("nodeId")Long nodeId);
+    @Query("delete from SensorData sensorData where sensorData.node_id = :node_id")
+    void deleteSensorDataByNodeId(@Param("node_id")Long node_id);
 
     @Transactional
     @Modifying
-    @Query("delete from SensorData sensorData where sensorData.sensorId = :sensorId")
-    void deleteSensorDataBySensorId(@Param("sensorId")Long sensorId);
+    @Query("delete from SensorData sensorData where sensorData.sensor_id = :sensor_id")
+    void deleteSensorDataBySensorId(@Param("sensor_id")Long sensor_id);
+
+    /**
+    @Transactional
+    @Modifying
+    @Query("UPDATE SensorData sensorData SET sensorData.sensorData = :sensorData where sensorData.cluster_id = :cluster_id")
+    int updateSensorDataValueByClusterId(@Param("sensorData") Double sensorData, @Param("cluster_id")Long cluster_id);
 
     @Transactional
     @Modifying
-    @Query("UPDATE SensorData sensorData SET sensorData.sensorData = :sensorData where sensorData.clusterId = :clusterId")
-    int updateSensorDataValueByClusterId(@Param("sensorData") Double sensorData, @Param("clusterId")Long clusterId);
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE SensorData sensorData SET sensorData.sensorData = :sensorData where sensorData.id = :id")
-    int updateSensorDataValueBySensorDataId(@Param("sensorData") Double sensorData, @Param("id")Long id);
+    @Query("UPDATE SensorData sensorData SET sensorData.sensorData = :sensorData where sensorData.sensordata_id = :sensordata_id")
+    int updateSensorDataValueBySensorDataId(@Param("sensorData") Double sensorData, @Param("sensordata_id")Long sensordata_id);
+    **/
 
 }

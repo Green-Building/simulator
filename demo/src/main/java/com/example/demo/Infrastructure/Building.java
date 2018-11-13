@@ -1,15 +1,13 @@
 package com.example.demo.Infrastructure;
 
-import com.example.demo.SimulatingStructure.Cluster;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @JsonPropertyOrder({
-        "building_id",
+        "id",
         "image_url",
         "address",
         "city",
@@ -22,66 +20,25 @@ import java.util.Set;
 
 @Entity
 @Table(name = "building")
-public class Building implements IBuilding {
+public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "building_id")
-    private long building_id;
-
-    @Column(name = "image_url")
+    private long id;
     private String image_url;
-
-    @Column(name = "address")
     private String address;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "state")
     private String state;
-
-    @Column(name = "zipcode")
     private String zipcode;
-
-    @Column(name = "num_of_floors")
     private String num_of_floors;
-
-    @Column(name = "longitude")
     private Double longitude;
-
-    @Column(name = "latitude")
     private Double latitude;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building", fetch = FetchType.EAGER)
-    private Set<Floor> floors = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building", fetch = FetchType.EAGER)
-    private Set<Cluster> clusters = new HashSet<>();
-
-    public Building() {
-
+    public long getId() {
+        return id;
     }
 
-    public Building(@JsonProperty("image_url") String image_url, @JsonProperty("address") String address,
-                    @JsonProperty("city") String city, @JsonProperty("state") String state,
-                    @JsonProperty("zipcode") String zipcode, @JsonProperty("num_of_floors") String num_of_floors,
-                    @JsonProperty("longitude") Double longitude, @JsonProperty("latitude") Double latitude) {
-        this.image_url = image_url;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zipcode = zipcode;
-        this.num_of_floors = num_of_floors;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-
-    public long getBuilding_id() {
-        return building_id;
-    }
-
-    public void setBuilding_id(long building_id) {
-        this.building_id = building_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getImage_url() {
@@ -148,25 +105,15 @@ public class Building implements IBuilding {
         this.latitude = latitude;
     }
 
-    public Set<Floor> getFloors() {
-        return floors;
-    }
-
-    public void setFloors(Set<Floor> floors) {
-        for (Floor floor : floors) {
-            floor.setBuilding(this);
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-        this.floors = floors;
-    }
-
-    public Set<Cluster> getClusters() {
-        for (Cluster cluster: clusters) {
-            cluster.setBuilding(this);
-        }
-        return clusters;
-    }
-
-    public void setClusters(Set<Cluster> clusters) {
-        this.clusters = clusters;
+        return json;
     }
 }

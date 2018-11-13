@@ -1,25 +1,33 @@
 package com.example.demo.SimulatingStructure;
 
-import com.example.demo.Infrastructure.Building;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name = "cluster")
-public class Cluster {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class NodeNested {
     private long id;
-    private long building_id;
-    private long floor_id;
+    private long cluster_id;
+    private long room_id;
     private String name;
     private String type;
     private String series_number;
     private Date install_time;
     private String status;
+    private List<Sensor> sensorSet;
+
+    public NodeNested(Node node, List<Sensor> sensorSet) {
+        this.id = node.getId();
+        this.cluster_id = node.getCluster_id();
+        this.room_id = node.getRoom_id();
+        this.name = node.getName();
+        this.type = node.getType();
+        this.series_number = node.getSeries_number();
+        this.install_time = node.getInstall_time();
+        this.status = node.getStatus();
+        this.sensorSet = sensorSet;
+    }
 
     public long getId() {
         return id;
@@ -29,20 +37,20 @@ public class Cluster {
         this.id = id;
     }
 
-    public long getBuilding_id() {
-        return building_id;
+    public long getCluster_id() {
+        return cluster_id;
     }
 
-    public void setBuilding_id(long building_id) {
-        this.building_id = building_id;
+    public void setCluster_id(long cluster_id) {
+        this.cluster_id = cluster_id;
     }
 
-    public long getFloor_id() {
-        return floor_id;
+    public long getRoom_id() {
+        return room_id;
     }
 
-    public void setFloor_id(long floor_id) {
-        this.floor_id = floor_id;
+    public void setRoom_id(long room_id) {
+        this.room_id = room_id;
     }
 
     public String getName() {
@@ -85,6 +93,14 @@ public class Cluster {
         this.status = status;
     }
 
+    public List<Sensor> getSensorSet() {
+        return sensorSet;
+    }
+
+    public void setSensorSet(List<Sensor> sensorSet) {
+        this.sensorSet = sensorSet;
+    }
+
     @Override
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();
@@ -96,4 +112,5 @@ public class Cluster {
         }
         return json;
     }
+
 }

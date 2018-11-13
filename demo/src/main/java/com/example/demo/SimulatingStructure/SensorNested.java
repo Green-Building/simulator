@@ -1,25 +1,35 @@
 package com.example.demo.SimulatingStructure;
 
-import com.example.demo.Infrastructure.Building;
+import com.example.demo.SensorData.SensorData;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "cluster")
-public class Cluster {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class SensorNested {
     private long id;
-    private long building_id;
-    private long floor_id;
+    private long node_id;
+    private long cluster_id;
     private String name;
     private String type;
     private String series_number;
     private Date install_time;
     private String status;
+
+    private SensorData sensorData;
+
+    public SensorNested(Sensor sensor, SensorData sensorData) {
+        this.id = sensor.getId();
+        this.node_id = sensor.getNode_id();
+        this.cluster_id = sensor.getCluster_id();
+        this.name = sensor.getName();
+        this.type = sensor.getType();
+        this.series_number = sensor.getSeries_number();
+        this.install_time = sensor.getInstall_time();
+        this.status = sensor.getStatus();
+        this.sensorData = sensorData;
+    }
 
     public long getId() {
         return id;
@@ -29,20 +39,20 @@ public class Cluster {
         this.id = id;
     }
 
-    public long getBuilding_id() {
-        return building_id;
+    public long getNode_id() {
+        return node_id;
     }
 
-    public void setBuilding_id(long building_id) {
-        this.building_id = building_id;
+    public void setNode_id(long node_id) {
+        this.node_id = node_id;
     }
 
-    public long getFloor_id() {
-        return floor_id;
+    public long getCluster_id() {
+        return cluster_id;
     }
 
-    public void setFloor_id(long floor_id) {
-        this.floor_id = floor_id;
+    public void setCluster_id(long cluster_id) {
+        this.cluster_id = cluster_id;
     }
 
     public String getName() {
@@ -85,6 +95,14 @@ public class Cluster {
         this.status = status;
     }
 
+    public SensorData getSensorData() {
+        return sensorData;
+    }
+
+    public void setSensorData(SensorData sensorData) {
+        this.sensorData = sensorData;
+    }
+
     @Override
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();
@@ -96,4 +114,5 @@ public class Cluster {
         }
         return json;
     }
+
 }

@@ -1,12 +1,12 @@
 package com.example.demo.Infrastructure;
 
 import com.example.demo.SimulatingStructure.Cluster;
-import com.example.demo.repository.BuildingRepository;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 
-public class BuildingView implements IBuilding{
-    private long building_id;
+public class BuildingNested {
+    private long id;
     private String image_url;
     private String address;
     private String city;
@@ -15,15 +15,12 @@ public class BuildingView implements IBuilding{
     private String num_of_floors;
     private Double longitude;
     private Double latitude;
+    private List<Floor> floors;
+    private List<Cluster> clusters;
 
-    private Building building = new Building();
-
-    public BuildingView () {
-
-    }
-
-    public BuildingView(Building building) {
-        this.building_id = building.getBuilding_id();
+    public BuildingNested(Building building, List<Floor> floors, List<Cluster> clusters)
+    {
+        this.id = building.getId();
         this.image_url = building.getImage_url();
         this.address = building.getAddress();
         this.city = building.getCity();
@@ -32,33 +29,16 @@ public class BuildingView implements IBuilding{
         this.num_of_floors = building.getNum_of_floors();
         this.latitude = building.getLatitude();
         this.longitude = building.getLongitude();
-        this.building = null;
+        this.floors = floors;
+        this.clusters = clusters;
     }
 
-    public void saveBuildingToDB(BuildingRepository buildingRepository) {
-        this.building.setBuilding_id(this.building_id);
-        this.building.setImage_url(this.image_url);
-        this.building.setAddress(this.address);
-        this.building.setCity(this.city);
-        this.building.setState(this.state);
-        this.building.setZipcode(this.zipcode);
-        this.building.setNum_of_floors(this.num_of_floors);
-        this.building.setLongitude(this.longitude);
-        this.building.setLatitude(this.latitude);
-        buildingRepository.save(this.building);
+    public long getId() {
+        return id;
     }
 
-    public Building findBuildingByBuildingId (String building_id, BuildingRepository buildingRepository) {
-        Long buidlingId = Long.valueOf(building_id).longValue();
-        return buildingRepository.findById(buidlingId).get();
-    }
-
-    public long getBuilding_id() {
-        return building_id;
-    }
-
-    public void setBuilding_id(long building_id) {
-        this.building_id = building_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getImage_url() {
@@ -125,11 +105,31 @@ public class BuildingView implements IBuilding{
         this.latitude = latitude;
     }
 
-    public Building getBuilding() {
-        return building;
+    public List<Floor> getFloors() {
+        return floors;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
+    public void setFloors(List<Floor> floors) {
+        this.floors = floors;
+    }
+
+    public List<Cluster> getClusters() {
+        return clusters;
+    }
+
+    public void setClusters(List<Cluster> clusters) {
+        this.clusters = clusters;
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }
