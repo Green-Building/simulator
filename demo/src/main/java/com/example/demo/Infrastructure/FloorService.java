@@ -7,7 +7,10 @@ import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FloorService {
@@ -41,5 +44,46 @@ public class FloorService {
         List<Sensor> sensorList = sensorRepository.findSensorByClusterId(cluster.getId());
         FloorNested floorNested = new FloorNested(floor,cluster,roomList,nodeList,sensorList);
         return floorNested.toString();
+    }
+
+    public long getFloorIdByFloorNumber(Integer floor_number, long building_id) {
+        Iterable<Floor> floors = floorRepository.findAll();
+        for(Floor floor: floors) {
+            if (floor.getFloor_number() == floor_number && floor.getBuilding_id() == building_id) {
+                return floor.getId();
+            }
+        }
+        return -20;
+    }
+
+    public Map<Integer, Boolean> getAlltheRoomAndNodeMatchedResult(String building_id, String floor_number) {
+        Map<Integer,Boolean> res = new HashMap<>();
+
+        long buildingId = Long.valueOf(building_id).longValue();
+        Integer floorNumber = Integer.valueOf(floor_number);
+        Iterable<Floor> floors = floorRepository.findAll();
+
+        long floor_id = 0;
+        for(Floor floor: floors) {
+            if (floor.getBuilding_id() == buildingId && floor.getFloor_number() == floorNumber) {
+                floor_id = floor.getId();
+            }
+        }
+
+        if (floor_id > 0) {
+            Iterable<Room> rooms = roomRepository.findRoomByFloorId(floor_id);
+            boolean isFound = false;
+            for(Room room: rooms) {
+                isFound = false;
+                if (nodeRepository.findNodeByRoomId(room.getId()) != null) {
+                    isFound = true;
+                    res.put(room.getRoom_number(), true);
+                }
+                if (!isFound) {
+                    res.put(room.getRoom_number(),false);
+                }
+            }
+        }
+        return res;
     }
 }

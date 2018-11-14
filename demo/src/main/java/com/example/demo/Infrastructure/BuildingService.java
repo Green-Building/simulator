@@ -7,8 +7,11 @@ import com.example.demo.repository.FloorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BuildingService {
@@ -24,18 +27,18 @@ public class BuildingService {
         return building.toString();
     }
 
-    public String getBuildingByBuidlingId(String building_id) {
+    public Building getBuildingByBuidlingId(String building_id) {
         long buildingid = Long.valueOf(building_id).longValue();
-        return buildingRepository.findById(buildingid).get().toString();
+        return buildingRepository.findById(buildingid).get();
     }
 
-    public String getBuildingNestedByBuidlingId(String building_id, String requirement) {
+    public BuildingNested getBuildingNestedByBuidlingId(String building_id, String requirement) {
         long buildingid = Long.valueOf(building_id).longValue();
         Building building = buildingRepository.findById(buildingid).get();
         List<Cluster> clusterList = clusterRepository.findClusterByBuildingId(buildingid);
         List<Floor> floorList = floorRepository.findFloorByBuildingId(buildingid);
         BuildingNested buildingNested = new BuildingNested(building,floorList,clusterList);
-        return buildingNested.toString();
+        return buildingNested;
     }
 
     public Iterable<Building> searchBuidlingByLatLng(String longitude, String latitude, String radius)
@@ -75,6 +78,25 @@ public class BuildingService {
                 if ( building.getZipcode().equalsIgnoreCase(zipcode) ) {
                     res.add(building);
                 }
+            }
+        }
+        return res;
+    }
+
+    public Map<Integer, Boolean> getFloorCluterMatchResult(BuildingNested buildingNested) {
+
+        Map<Integer, Boolean> res = new HashMap<>();
+
+        Iterable<Floor> floors = buildingNested.getFloors();
+        for(Floor floor: floors) {
+            Iterable<Cluster> clusters = buildingNested.getClusters();
+            for(Cluster cluster: clusters) {
+                if(cluster.getFloor_id() == floor.getId()) {
+                    res.put(floor.getFloor_number(), true);
+                }
+            }
+            if (!res.containsKey(floor.getFloor_number())) {
+                res.put(floor.getFloor_number(), false);
             }
         }
         return res;

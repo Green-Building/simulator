@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.Infrastructure.BuildingNested;
+import com.example.demo.Infrastructure.BuildingService;
+import com.example.demo.Infrastructure.FloorService;
 import com.example.demo.SensorData.SensorDataService;
 import com.example.demo.SimulatingStructure.*;
 import com.example.demo.repository.*;
@@ -35,6 +38,10 @@ public class SimulatorController {
     private NodeService nodeService;
     @Autowired
     private ClusterService clusterService;
+    @Autowired
+    private FloorService floorService;
+    @Autowired
+    private BuildingService buildingService;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/sensors")
@@ -71,30 +78,49 @@ public class SimulatorController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value="/clusters/add", produces = "application/json;charset=utf-8;")
-    public @ResponseBody
-    String addClusterSubmit(@RequestBody(required = true) Map<String, LinkedHashMap<String,String>> map)
+    @GetMapping("/clusters/add")
+    public String getAddClusterForm(Model model) {
+        Cluster cluster = new Cluster();
+        model.addAttribute("cluster",cluster);
+        return "addCluster";
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(value="/clusters")
+    public String addClusterSubmit(@ModelAttribute Cluster cluster, Model model)
     {
-        return clusterService.saveClusterToDB(map);
-        /**
-        ClientHttpRequestFactory requestFactory = new
-                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-         String url = "http://localhost:3010/clusters";
-        String result = restTemplate.postForObject(url, cluster, String.class);
-         **/
+        int floor_number = cluster.getFloor_number();
+        long building_id = cluster.getBuilding_id();
+        long floor_id = floorService.getFloorIdByFloorNumber(floor_number, building_id);
+        if (floor_id == -20) {
+            return "Fail to add a cluster...";
+        } else {
+            cluster.setFloor_id(floor_id);
+            cluster.setInstall_time(new Date());
+            cluster.setStatus("active");
+            clusterService.saveClusterToDB(cluster);
+            /**
+             ClientHttpRequestFactory requestFactory = new
+             HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+             RestTemplate restTemplate = new RestTemplate(requestFactory);
+             String url = "http://localhost:3010/clusters";
+             String result = restTemplate.postForObject(url, cluster, String.class);
+             **/
+            model.addAttribute("buildingId", cluster.getBuilding_id());
+            return "resultAfterAddDeleteNewCluster";
+        }
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(value = "/clusters/{cluster_id}")
+    @GetMapping(value = "/clusters/delete/{building_id}")
     //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
-    public @ResponseBody
-    String deleteClusterByClusterId (@PathVariable final String cluster_id) {
-        Long clusterId = Long.valueOf(cluster_id).longValue();
-        clusterRepository.deleteById(clusterId);
-        nodeRepository.deleteNodeByClusterId(clusterId);
-        sensorRepository.deleteSensorByClusterId(clusterId);
-        sensorDataRepository.deleteSensorDataByClusterId(clusterId);
+    public String deleteClusterByClusterId (
+            @PathVariable("building_id" )final String building_id,
+            @RequestParam (value = "floor_number", required = true) final String floor_number,
+            Model model)
+    {
+        clusterService.deleteClusterByBuidlingIdFloorNumber(building_id,floor_number);
         /**
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
@@ -102,7 +128,9 @@ public class SimulatorController {
         String url = "http://localhost:3010/clusters/{cluster_id}";
         String result = restTemplate.postForObject(url, cluster_id, String.class);
          **/
-        return "success...";
+        long buildingId = Long.valueOf(building_id).longValue();
+        model.addAttribute("buildingId", buildingId);
+        return "resultAfterAddDeleteNewCluster";
     }
 
     @CrossOrigin(origins = "*")

@@ -11,7 +11,6 @@ public class FloorNested {
     private long id;
     private long building_id;
     private Integer floor_number;
-
     private Cluster cluster;
     private List<Room> roomList;
     private List<Node> nodeList;

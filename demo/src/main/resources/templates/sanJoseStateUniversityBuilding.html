@@ -16,9 +16,9 @@
 <!-- Nav -->
 <nav id="nav">
     <ul class="container">
-        <li><a href="#top">Top</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#top">Building</a></li>
+        <li><a href="#work">Floor</a></li>
+        <li><a href="#portfolio">Room</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
@@ -27,22 +27,46 @@
 <article id="work" class="wrapper style2">
     <div class="container">
         <header>
-            <h2>Here's all the stuff I do.</h2>
-            <p>Odio turpis amet sed consequat eget posuere consequat.</p>
+            <h2>Here's all floors</h2>
+            <p>Add a cluster or Delete a cluster</p>
         </header>
         <div class="row aln-center">
             <div>
-                <span th:unless = "${matchedRes.get(1)}">
-                    <form action="#" th:action="@{/clusters/1}" th:object="${cluster}" method="post">
-                        <p>Building Id: <input type = "text" th:field="*{building_id}"/></p>
-                        <p>Floor Number: <input type = "text" value="1" /></p>
-                        <p>Cluster name: <input type = "text" th:field="*{name}"/></p>
-                        <p>Series Number: <input type = "text" th:field="*{series_number}"/></p>
-                        <p>Type: <input type="text" th:field="*{type}"/></p>
-                        <p><input type="submit" value="Add a Cluster" /></p>
-                    </form>
+                <section class="box style1">
+                    <span th:if = "${matchedRes.get(1)}">
+                        <img  src="../../image/first-floorwithcluster.png" th:src="@{/image/first-floorwithcluster.png}" alt="" />
+                    </span>
+                    <span th:unless = "${matchedRes.get(1)}">
+                        <img  src="../../image/first-floor.png" th:src="@{/image/first-floor.png}" alt=""/>
+                    </span>
+                    <h3>Floor One</h3>
+                </section>
+                <span th:if = "${matchedRes.get(1)}">
+                    <a href="http://localhost:3005/clusters/delete/2?floor_number=1" class="button large scrolly">Delete a Cluster</a>
                 </span>
-                <a href="#portfolio" class="button large scrolly">View Rooms on Floor One</a>
+                <span th:unless = "${matchedRes.get(1)}">
+                    <a href="http://localhost:3005/clusters/add" class="button large scrolly"> Add a Cluster</a>
+                </span>
+                <a href="http://localhost:3005/buildings/2/floors/1" class="button large scrolly">View Rooms on Floor One</a>
+            </div>
+
+            <div>
+                <section class="box style1">
+                    <span th:if = "${matchedRes.get(2)}">
+                        <img  src="../../image/second-floorwithcluster.png" th:src="@{/image/second-floorwithcluster.png}" alt="" />
+                    </span>
+                    <span th:unless = "${matchedRes.get(2)}">
+                        <img  src="../../image/secend-floor.png" th:src="@{/image/second-floor.png}" alt="" />
+                    </span>
+                    <h3>Floor Two</h3>
+                </section>
+                <span th:if = "${matchedRes.get(2)}">
+                    <a href="http://localhost:3005/clusters/delete/2?floor_number=2" class="button large scrolly">Delete a Cluster</a>
+                </span>
+                <span th:unless = "${matchedRes.get(2)}">
+                    <a href="http://localhost:3005/clusters/add" class="button large scrolly" method = "post"> Add a Cluster</a>
+                </span>
+                <a href="#portfolio" class="button large scrolly" method = "post">View Rooms on Floor Two</a>
             </div>
         </div>
     </div>

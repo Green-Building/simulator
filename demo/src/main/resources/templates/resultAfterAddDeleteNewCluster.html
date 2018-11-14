@@ -27,24 +27,14 @@
 <article id="work" class="wrapper style2">
     <div class="container">
         <header>
-            <h2>Here's all the stuff I do.</h2>
-            <p>Odio turpis amet sed consequat eget posuere consequat.</p>
-        </header>
-        <div class="row aln-center">
-            <div>
-                <span th:unless = "${matchedRes.get(1)}">
-                    <form action="#" th:action="@{/clusters/1}" th:object="${cluster}" method="post">
-                        <p>Building Id: <input type = "text" th:field="*{building_id}"/></p>
-                        <p>Floor Number: <input type = "text" value="1" /></p>
-                        <p>Cluster name: <input type = "text" th:field="*{name}"/></p>
-                        <p>Series Number: <input type = "text" th:field="*{series_number}"/></p>
-                        <p>Type: <input type="text" th:field="*{type}"/></p>
-                        <p><input type="submit" value="Add a Cluster" /></p>
-                    </form>
-                </span>
-                <a href="#portfolio" class="button large scrolly">View Rooms on Floor One</a>
+            <h2>Succeed!</h2>
+            <div th:if = "${buildingId == 1}">
+                <p><a href="http://localhost:3005/buildings/1">Go back to Building 1</a></p>
             </div>
-        </div>
+            <div th:if = "${buildingId == 2}">
+                <p><a href="http://localhost:3005/buildings/2">Go back to Building 2</a></p>
+            </div>
+        </header>
     </div>
 </article>
 

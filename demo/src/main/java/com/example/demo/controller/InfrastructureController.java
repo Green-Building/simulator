@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.Infrastructure.*;
+import com.example.demo.SimulatingStructure.Cluster;
+import com.example.demo.SimulatingStructure.ClusterService;
 import com.example.demo.repository.*;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONException;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +26,8 @@ public class InfrastructureController {
     private FloorService floorService;
     @Autowired
     private BuildingService buildingService;
+    @Autowired
+    private ClusterService clusterService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/rooms/{room_id}")
@@ -54,17 +59,27 @@ public class InfrastructureController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/buildings/{building_id}")
-    //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
-    public @ResponseBody
-    String getbuidlingById(
-            @PathVariable("building_id") final String building_id,
-            @RequestParam(value = "fetch_nested", required = false) final String nestedContent
-    ) {
-        if (nestedContent == null) {
-            return buildingService.getBuildingByBuidlingId(building_id);
+    public String getBuildingByBuidlingId(
+            @PathVariable final String building_id,
+            Model model)
+    {
+        BuildingNested buildingNested = buildingService.getBuildingNestedByBuidlingId(building_id,"floor,cluster");
+        Map<Integer,Boolean> matchedRes = buildingService.getFloorCluterMatchResult(buildingNested);
+        model.addAttribute("matchedRes", matchedRes);
+        Cluster cluster = new Cluster();
+        model.addAttribute("cluster",cluster);
+        if (building_id.equals("2")) {
+            return "sanJoseStateUniversityBuilding";
         } else {
-            return buildingService.getBuildingNestedByBuidlingId(building_id,nestedContent);
+            return "sanJoseStateUniversityBuilding";
         }
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/index")
+    public String getIndexPage(Model model) {
+        return "index";
     }
 
     @CrossOrigin(origins = "*")
@@ -87,6 +102,28 @@ public class InfrastructureController {
     {
         return buildingService.searchBuidlingByLocation(city,state,zipcode);
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/buildings/{building_id}/floors/{floor_number}")
+    public String getFloorPlanByBuilidngIdFloorNumber(
+            @PathVariable final String building_id,
+            @PathVariable final String floor_number,
+            Model model)
+    {
+        if (building_id.equals("2") && floor_number.equals("1")) {
+            Map<Integer, Boolean> res = floorService.getAlltheRoomAndNodeMatchedResult(building_id,floor_number);
+            model.addAttribute("res", res);
+            return "sjsuFloor1";
+        }
+
+        if(building_id.equals("2") && floor_number.equals("2")) {
+            return "sjsuFloor2";
+        }
+
+        return "Not Found.";
+
+    }
+
 
     @CrossOrigin(origins = "*")
     @PostMapping("/buildings")
