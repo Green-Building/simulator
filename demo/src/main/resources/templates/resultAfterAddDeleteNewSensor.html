@@ -27,25 +27,12 @@
 <article id="work" class="wrapper style2">
     <div class="container">
         <header>
-            <h2>Here's all the stuff I do.</h2>
-            <p>Odio turpis amet sed consequat eget posuere consequat.</p>
+            <h2>Succeed!</h2>
+            <p><a th:href="@{'http://localhost:3005/buildings/'+${building_id}+'/floors/'+${floor_number}}">Go back to the Room</a></p>
         </header>
-        <div class="row aln-center">
-            <div>
-                <span>
-                    <form action="#" th:action="@{/clusters}" th:object="${cluster}" method="post">
-                        <p>Building Id:   <input type = "text" th:field="*{building_id}"/></p>
-                        <p>Floor Number:  <input type = "text" th:field="*{floor_number}" /></p>
-                        <p>Cluster name:  <input type = "text" th:field="*{name}"/></p>
-                        <p>Series Number: <input type = "text" th:field="*{series_number}"/></p>
-                        <p>Type:          <input type = "text" th:field="*{type}"/></p>
-                        <p><input type="submit" value="Add a Cluster" /></p>
-                    </form>
-                </span>
-            </div>
-        </div>
     </div>
 </article>
+
 
 <!-- Contact -->
 <article id="contact" class="wrapper style4">

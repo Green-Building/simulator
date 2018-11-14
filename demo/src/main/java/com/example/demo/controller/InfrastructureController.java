@@ -111,17 +111,17 @@ public class InfrastructureController {
             Model model)
     {
         if (building_id.equals("2") && floor_number.equals("1")) {
-            Map<Integer, Boolean> res = floorService.getAlltheRoomAndNodeMatchedResult(building_id,floor_number);
+            Map<Integer, Integer> res = floorService.getAlltheRoomNodeSensorsMatchedResult(building_id,floor_number);
             model.addAttribute("res", res);
             return "sjsuFloor1";
         }
 
         if(building_id.equals("2") && floor_number.equals("2")) {
+            Map<Integer, Integer> res = floorService.getAlltheRoomNodeSensorsMatchedResult(building_id,floor_number);
+            model.addAttribute("res", res);
             return "sjsuFloor2";
         }
-
         return "Not Found.";
-
     }
 
 

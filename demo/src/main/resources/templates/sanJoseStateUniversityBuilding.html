@@ -27,17 +27,16 @@
 <article id="work" class="wrapper style2">
     <div class="container">
         <header>
-            <h2>Here's all floors</h2>
-            <p>Add a cluster or Delete a cluster</p>
+            <h2>San Jose State University Building 1 with two floors</h2>
         </header>
         <div class="row aln-center">
             <div>
                 <section class="box style1">
                     <span th:if = "${matchedRes.get(1)}">
-                        <img  src="../../image/first-floorwithcluster.png" th:src="@{/image/first-floorwithcluster.png}" alt="" />
+                        <img  src="../../image/sjsu-first-floor-with-cluster.png" th:src="@{/image/sjsu-first-floor-with-cluster.png}" alt="" />
                     </span>
                     <span th:unless = "${matchedRes.get(1)}">
-                        <img  src="../../image/first-floor.png" th:src="@{/image/first-floor.png}" alt=""/>
+                        <img  src="../../image/sjsu-first-floor-without-cluster.png" th:src="@{/image/sjsu-first-floor-without-cluster.png}" alt=""/>
                     </span>
                     <h3>Floor One</h3>
                 </section>
@@ -48,15 +47,17 @@
                     <a href="http://localhost:3005/clusters/add" class="button large scrolly"> Add a Cluster</a>
                 </span>
                 <a href="http://localhost:3005/buildings/2/floors/1" class="button large scrolly">View Rooms on Floor One</a>
+                <br>
+                <br>
             </div>
 
             <div>
                 <section class="box style1">
                     <span th:if = "${matchedRes.get(2)}">
-                        <img  src="../../image/second-floorwithcluster.png" th:src="@{/image/second-floorwithcluster.png}" alt="" />
+                        <img  src="../../image/sjsu-second-floor-with-cluster.png" th:src="@{/image/sjsu-second-floor-with-cluster.png}" alt="" />
                     </span>
                     <span th:unless = "${matchedRes.get(2)}">
-                        <img  src="../../image/secend-floor.png" th:src="@{/image/second-floor.png}" alt="" />
+                        <img  src="../../image/sjsu-second-floor-without-cluster.png" th:src="@{/image/sjsu-second-floor-without-cluster.png}" alt="" />
                     </span>
                     <h3>Floor Two</h3>
                 </section>

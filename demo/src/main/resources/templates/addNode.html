@@ -1,38 +1,124 @@
 <!DOCTYPE HTML>
+<!--
+	Miniport by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add a Cluster to the Simulator</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Miniport by HTML5 UP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/main.css" th:href="@{/css/main.css}" />
 </head>
-<body>
+<body class="is-preload">
 
-<h1>All The Clusters</h1>
-<table border="1" align="center">
-    <tr>
-        <td>Cluster ID</td>
-        <td>Cluster Name</td>
-        <td>Cluster Floor</td>
-    </tr>
-    <tr th:each ="i:${clusters}">
-        <td th:text = "${i.id}"></td>
-        <td th:text = "${i.name}"></td>
-        <td th:text = "${i.floor}"></td>
-    </tr>
-</table>
+<!-- Nav -->
+<nav id="nav">
+    <ul class="container">
+        <li><a href="#top">Top</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
 
-<form action="#" th:action="@{/add/node}" th:object="${node}" method="post">
-    <div>
-        <label>Please select an Floor for the Node:
-            <select th:field = "*{clusterId}" th:remove ="all-but-first">
-                <option th:each="i: ${clusters}"
-                        th:value="${i.id}" th:text="${i.floor}"> Cluster</option>
-            </select>
-        </label>
+<!-- Work -->
+<article id="work" class="wrapper style2">
+    <div class="container">
+        <header>
+            <h2>Here's all the stuff I do.</h2>
+            <p>Odio turpis amet sed consequat eget posuere consequat.</p>
+        </header>
+        <div class="row aln-center">
+            <div>
+                <span>
+                    <form action="#" th:action="@{'/nodes/add/'+${building_id}+'/'+ ${floor_number}+'/'+ ${room_number}}" th:object="${node}" method="post">
+                        <p>Node Name:   <input type = "text" th:field="*{name}"/></p>
+                        <p>Node type:   <input type = "text" th:field="*{type}" /></p>
+                        <p>Series Number: <input type = "text" th:field="*{series_number}"/></p>
+                        <p>Status:        <input type = "text" th:field="*{status}"/></p>
+                        <p><input type="submit" value="Add a sensor" /></p>
+                    </form>
+                </span>
+            </div>
+        </div>
     </div>
-    <p>Node name: <input type="text" th:field="*{name}" /></p>
-    <p>Room: <input type="text" th:field="*{room}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+</article>
+
+<!-- Contact -->
+<article id="contact" class="wrapper style4">
+    <div class="container medium">
+        <header>
+            <h2>Have me make stuff for you.</h2>
+            <p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <form method="post" action="#">
+                    <div class="row">
+                        <div class="col-6 col-12-small">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+                        <div class="col-6 col-12-small">
+                            <input type="text" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="col-12">
+                            <input type="text" name="subject" id="subject" placeholder="Subject" />
+                        </div>
+                        <div class="col-12">
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><input type="submit" value="Send Message" /></li>
+                                <li><input type="reset" value="Clear Form" class="alt" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <hr />
+                <h3>Find me on ...</h3>
+                <ul class="social">
+                    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+                    <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
+                    <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+                    <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+                    <!--
+                    <li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
+                    <li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li>
+                    <li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
+                    <li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
+                    <li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
+                    <li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
+                    <li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
+                    <li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
+                    <li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
+                    -->
+                </ul>
+                <hr />
+            </div>
+        </div>
+        <footer>
+            <ul id="copyright">
+                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </footer>
+    </div>
+</article>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
 </body>
 </html>
