@@ -52,7 +52,7 @@ public class NodeService {
         return node_id;
     }
 
-    public void saveNodeToDB (Node node, String building_id, String floor_number, String room_number)
+    public Node saveNodeToDB (Node node, String building_id, String floor_number, String room_number)
     {
         long buildingId = Long.valueOf(building_id).longValue();
         Integer floorNumber = Integer.valueOf(floor_number);
@@ -82,6 +82,7 @@ public class NodeService {
 
         node.setInstall_time(new Date());
         nodeRepository.save(node);
+        return node;
     }
 
     public void saveNodeToDB(Node node) {

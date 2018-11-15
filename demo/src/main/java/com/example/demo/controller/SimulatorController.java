@@ -44,10 +44,16 @@ public class SimulatorController {
     private BuildingService buildingService;
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/clusters/add")
-    public String getAddClusterForm(Model model) {
+    @GetMapping("/clusters/add/{building_id}/{floor_number}")
+    public String getAddClusterForm(
+            @PathVariable("building_id") final long building_id,
+            @PathVariable("floor_number") final Integer floor_number,
+            Model model)
+    {
         Cluster cluster = new Cluster();
         model.addAttribute("cluster",cluster);
+        model.addAttribute("building_id",building_id);
+        model.addAttribute("floor_number",floor_number);
         return "addCluster";
     }
 
@@ -83,19 +89,14 @@ public class SimulatorController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value="/clusters")
-    public String addClusterSubmit(@ModelAttribute Cluster cluster, Model model)
+    @PostMapping(value="/clusters/add/{building_id}/{floor_number}")
+    public String addClusterSubmit(
+            @ModelAttribute Cluster cluster,
+            @PathVariable("building_id") final String building_id,
+            @PathVariable("floor_number") final String floor_number,
+            Model model)
     {
-        int floor_number = cluster.getFloor_number();
-        long building_id = cluster.getBuilding_id();
-        long floor_id = floorService.getFloorIdByFloorNumber(floor_number, building_id);
-        if (floor_id == -20) {
-            return "Fail to add a cluster...";
-        } else {
-            cluster.setFloor_id(floor_id);
-            cluster.setInstall_time(new Date());
-            cluster.setStatus("active");
-            clusterService.saveClusterToDB(cluster);
+        Cluster newCluster = clusterService.saveClusterToDB(cluster,building_id,floor_number);
             /**
              ClientHttpRequestFactory requestFactory = new
              HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
@@ -103,9 +104,8 @@ public class SimulatorController {
              String url = "http://localhost:3010/clusters";
              String result = restTemplate.postForObject(url, cluster, String.class);
              **/
-            model.addAttribute("buildingId", cluster.getBuilding_id());
+            model.addAttribute("buildingId", newCluster.getBuilding_id());
             return "resultAfterAddDeleteNewCluster";
-        }
     }
 
     @CrossOrigin(origins = "*")
@@ -155,11 +155,11 @@ public class SimulatorController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/clusters/delete/{building_id}")
+    @GetMapping(value = "/clusters/delete/{building_id}/{floor_number}")
     //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
     public String deleteClusterByClusterId (
             @PathVariable("building_id" ) final String building_id,
-            @RequestParam (value = "floor_number", required = true) final String floor_number,
+            @PathVariable("floor_number") final String floor_number,
             Model model)
     {
         clusterService.deleteClusterByBuidlingIdFloorNumber(building_id,floor_number);

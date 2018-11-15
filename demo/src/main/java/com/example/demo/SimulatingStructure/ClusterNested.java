@@ -12,7 +12,6 @@ public class ClusterNested {
     private long id;
     private long building_id;
     private long floor_id;
-    private Integer floor_number;
     private String name;
     private String type;
     private String series_number;
@@ -27,7 +26,6 @@ public class ClusterNested {
         this.id = cluster.getId();
         this.building_id = cluster.getBuilding_id();
         this.floor_id = cluster.getFloor_id();
-        this.floor_number = cluster.getFloor_number();
         this.name = cluster.getName();
         this.type = cluster.getType();
         this.series_number = cluster.getSeries_number();
@@ -42,7 +40,6 @@ public class ClusterNested {
         this.id = cluster.getId();
         this.building_id = cluster.getBuilding_id();
         this.floor_id = cluster.getFloor_id();
-        this.floor_number = cluster.getFloor_number();
         this.name = cluster.getName();
         this.type = cluster.getType();
         this.series_number = cluster.getSeries_number();
@@ -55,7 +52,6 @@ public class ClusterNested {
         this.id = cluster.getId();
         this.building_id = cluster.getBuilding_id();
         this.floor_id = cluster.getFloor_id();
-        this.floor_number = cluster.getFloor_number();
         this.name = cluster.getName();
         this.type = cluster.getType();
         this.series_number = cluster.getSeries_number();
@@ -87,14 +83,6 @@ public class ClusterNested {
 
     public void setFloor_id(long floor_id) {
         this.floor_id = floor_id;
-    }
-
-    public Integer getFloor_number() {
-        return floor_number;
-    }
-
-    public void setFloor_number(Integer floor_number) {
-        this.floor_number = floor_number;
     }
 
     public String getName() {

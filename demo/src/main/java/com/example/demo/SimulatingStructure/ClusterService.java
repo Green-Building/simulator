@@ -1,9 +1,12 @@
 package com.example.demo.SimulatingStructure;
 
+import com.example.demo.Infrastructure.Floor;
 import com.example.demo.Infrastructure.Room;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,9 +24,30 @@ public class ClusterService {
     @Autowired
     private SensorDataRepository sensorDataRepository;
 
-    public String saveClusterToDB(Cluster cluster) {
+    public Cluster saveClusterToDB(Cluster cluster, String building_id, String floor_number)
+    {
+        long buildingId = Long.valueOf(building_id).longValue();
+        cluster.setBuilding_id(buildingId);
+
+        Integer floorNumber = Integer.valueOf(floor_number);
+        Iterable<Floor> floors = floorRepository.findFloorByBuildingId(buildingId);
+        long floor_id = 0;
+        for(Floor floor: floors) {
+            if(floor.getFloor_number() == floorNumber) {
+                floor_id = floor.getId();
+                break;
+            }
+        }
+        cluster.setFloor_id(floor_id);
+        cluster.setInstall_time(new Date());
+        cluster.setStatus("active");
         clusterRepository.save(cluster);
-        return cluster.toString();
+        return cluster;
+    }
+
+    public Cluster saveClusterToDB(Cluster cluster) {
+        clusterRepository.save(cluster);
+        return cluster;
     }
 
     public String getClusterByClusterId (String cluster_id) {
@@ -53,20 +77,31 @@ public class ClusterService {
         return clusterRepository.findById(clusterid).get().toString();
     }
 
-    public Boolean deleteClusterByBuidlingIdFloorNumber(String buidling_id, String floor_number) {
+    public long deleteClusterByBuidlingIdFloorNumber(String buidling_id, String floor_number) {
         Boolean res = false;
-        Long buidlingId = Long.valueOf(buidling_id).longValue();
+        Long buildingId = Long.valueOf(buidling_id).longValue();
+
         Integer floorNumber = Integer.valueOf(floor_number);
+        Iterable<Floor> floors = floorRepository.findFloorByBuildingId(buildingId);
+        long floor_id = 0;
+        for(Floor floor: floors) {
+            if(floor.getFloor_number() == floorNumber) {
+                floor_id = floor.getId();
+                break;
+            }
+        }
+
         Iterable<Cluster> clusters = clusterRepository.findAll();
         for (Cluster cluster: clusters) {
-            if (cluster.getBuilding_id() == buidlingId && cluster.getFloor_number() == floorNumber) {
+            if (cluster.getBuilding_id() == buildingId && cluster.getFloor_id() == floor_id) {
                 clusterRepository.deleteById(cluster.getId());
                 nodeRepository.deleteNodeByClusterId(cluster.getId());
                 sensorRepository.deleteSensorByClusterId(cluster.getId());
                 sensorDataRepository.deleteSensorDataByClusterId(cluster.getId());
                 res = true;
+                return cluster.getId();
             }
         }
-        return res;
+        return 0;
     }
 }
