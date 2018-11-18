@@ -46,6 +46,7 @@ public class ClusterService {
     }
 
     public Cluster saveClusterToDB(Cluster cluster) {
+        cluster.setInstall_time(new Date());
         clusterRepository.save(cluster);
         return cluster;
     }
@@ -75,6 +76,18 @@ public class ClusterService {
                     return clusterNested.toString();
             }
         return clusterRepository.findById(clusterid).get().toString();
+    }
+
+    public void deleteClusterByClusterId(long cluster_id) {
+        Cluster cluster = clusterRepository.findById(cluster_id).get();
+        if (cluster == null) {
+            return;
+        } else {
+            clusterRepository.deleteById(cluster_id);
+            nodeRepository.deleteNodeByClusterId(cluster_id);
+            sensorRepository.deleteSensorByClusterId(cluster_id);
+            sensorDataRepository.deleteSensorDataByClusterId(cluster_id);
+        }
     }
 
     public long deleteClusterByBuidlingIdFloorNumber(String buidling_id, String floor_number) {

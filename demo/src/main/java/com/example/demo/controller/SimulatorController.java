@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.Infrastructure.BuildingNested;
 import com.example.demo.Infrastructure.BuildingService;
 import com.example.demo.Infrastructure.FloorService;
 import com.example.demo.SensorData.SensorDataService;
 import com.example.demo.SimulatingStructure.*;
 import com.example.demo.repository.*;
 import org.apache.http.impl.client.HttpClients;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -16,10 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 @Controller
 public class SimulatorController {
     @Autowired
@@ -97,15 +90,13 @@ public class SimulatorController {
             Model model)
     {
         Cluster newCluster = clusterService.saveClusterToDB(cluster,building_id,floor_number);
-            /**
-             ClientHttpRequestFactory requestFactory = new
+        ClientHttpRequestFactory requestFactory = new
              HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-             RestTemplate restTemplate = new RestTemplate(requestFactory);
-             String url = "http://localhost:3010/clusters";
-             String result = restTemplate.postForObject(url, cluster, String.class);
-             **/
-            model.addAttribute("buildingId", newCluster.getBuilding_id());
-            return "resultAfterAddDeleteNewCluster";
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        String url = "http://localhost:3006/clusters";
+        String result = restTemplate.postForObject(url, newCluster, String.class);
+        model.addAttribute("buildingId", newCluster.getBuilding_id());
+        return "resultAfterAddDeleteNewCluster";
     }
 
     @CrossOrigin(origins = "*")
@@ -118,17 +109,15 @@ public class SimulatorController {
             Model model)
     {
         Sensor sensorNew = sensorService.saveSensorToDB(sensor,building_id,floor_number,room_number);
+        ClientHttpRequestFactory requestFactory = new
+            HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        String url = "http://localhost:3006/sensors";
+        String result = restTemplate.postForObject(url, sensorNew, String.class);
         sensorDataService.createSensorData(sensorNew);
         model.addAttribute("building_id",building_id);
         model.addAttribute("floor_number", floor_number);
         return "resultAfterAddDeleteNewSensor";
-        /**
-         ClientHttpRequestFactory requestFactory = new
-         HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-         RestTemplate restTemplate = new RestTemplate(requestFactory);
-         String url = "http://localhost:3010/sensors";
-         String result = restTemplate.postForObject(url, sensor, String.class);
-         **/
     }
 
     @CrossOrigin(origins = "*")
@@ -140,17 +129,17 @@ public class SimulatorController {
             @PathVariable("room_number") final String room_number,
             Model model)
     {
-        nodeService.saveNodeToDB(node, building_id,floor_number,room_number);
+        Node nodeNew = nodeService.saveNodeToDB(node, building_id,floor_number,room_number);
         model.addAttribute("building_id",building_id);
         model.addAttribute("floor_number", floor_number);
-        /**
+
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
-        String url = "http://localhost:3010/add/node";
-        String result = restTemplate.postForObject(url, node, String.class);
-         **/
+        String url = "http://localhost:3006/nodes";
+        String result = restTemplate.postForObject(url, nodeNew, String.class);
+
         return "resultAfterAddDeleteNewSensor";
     }
 
@@ -162,14 +151,13 @@ public class SimulatorController {
             @PathVariable("floor_number") final String floor_number,
             Model model)
     {
-        clusterService.deleteClusterByBuidlingIdFloorNumber(building_id,floor_number);
-        /**
+        long cluster_id = clusterService.deleteClusterByBuidlingIdFloorNumber(building_id,floor_number);
+
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3010/clusters/{cluster_id}";
-        String result = restTemplate.postForObject(url, cluster_id, String.class);
-         **/
+        String url = "http://localhost:3006/clusters/" + cluster_id+"?from=1";
+        restTemplate.delete(url);
         long buildingId = Long.valueOf(building_id).longValue();
         model.addAttribute("buildingId", buildingId);
         return "resultAfterAddDeleteNewCluster";
@@ -183,20 +171,16 @@ public class SimulatorController {
             @PathVariable final String room_number,
             Model model)
     {
-
         long node_id = nodeService.deleteNode(building_id,floor_number,room_number);
+        ClientHttpRequestFactory requestFactory = new
+                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        String url = "http://localhost:3006/nodes/"+node_id+"?from=1";
+        restTemplate.delete(url);
         model.addAttribute("building_id", building_id);
         model.addAttribute("floor_number",floor_number);
         model.addAttribute("room_number", room_number);
         return "resultAfterAddDeleteNewSensor";
-        /**
-        ClientHttpRequestFactory requestFactory = new
-                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-
-        String url = "http://localhost:3010/node/{node_id}";
-        String result = restTemplate.postForObject(url, node_id, String.class);
-         **/
     }
 
     @CrossOrigin(origins = "*")
@@ -207,19 +191,15 @@ public class SimulatorController {
             @PathVariable("room_number") final String room_number,
             Model model)
     {
-
         long sensor_id = sensorService.deleteASensorFromARoom(building_id, floor_number,room_number);
         model.addAttribute("building_id", building_id);
         model.addAttribute("floor_number",floor_number);
         model.addAttribute("room_number", room_number);
-        /**
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-
-        String url = "http://localhost:3010/delete/cluster/{sensor_id}";
-        String result = restTemplate.postForObject(url, sensor_id, String.class);
-         **/
+        String url = "http://localhost:3006/sensors/" + sensor_id+"?from=1";
+        restTemplate.delete(url);
         return "resultAfterAddDeleteNewSensor";
     }
 

@@ -26,6 +26,17 @@ public class SensorService {
     @Autowired
     RoomRepository roomRepository;
 
+    public void deleteSensorBySensorId(long sensor_id) {
+        Sensor sensor = sensorRepository.findById(sensor_id).get();
+        if (sensor == null) {
+            return;
+        } else {
+            sensorRepository.deleteById(sensor_id);
+            sensorDataRepository.deleteSensorDataBySensorId(sensor_id);
+
+        }
+    }
+
     public long deleteASensorFromARoom(String building_id, String floor_number, String room_number) {
         long buildingId = Long.valueOf(building_id).longValue();
         Integer floorNumber = Integer.valueOf(floor_number);
@@ -93,8 +104,10 @@ public class SensorService {
         return sensor;
     }
 
-    public void saveSensorToDB (Sensor sensor) {
+    public Sensor saveSensorToDB (Sensor sensor) {
+        sensor.setInstall_time(new Date());
         sensorRepository.save(sensor);
+        return sensor;
     }
 
     public String getSensorBySensorId (String sensor_id) {

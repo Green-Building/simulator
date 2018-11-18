@@ -24,6 +24,17 @@ public class NodeService {
     @Autowired
     private SensorDataRepository sensorDataRepository;
 
+    public void deleteNodeByNodeId(long node_id) {
+        Node node = nodeRepository.findById(node_id).get();
+        if (node == null) {
+            return;
+        } else {
+            nodeRepository.deleteById(node_id);
+            sensorRepository.deleteSensorByNodeId(node_id);
+            sensorDataRepository.deleteSensorDataByNodeId(node_id);
+        }
+    }
+
     public long deleteNode(String building_id, String floor_number, String room_number)
     {
         long buildingId = Long.valueOf(building_id).longValue();
@@ -85,8 +96,10 @@ public class NodeService {
         return node;
     }
 
-    public void saveNodeToDB(Node node) {
+    public Node saveNodeToDB(Node node) {
+        node.setInstall_time(new Date());
         nodeRepository.save(node);
+        return node;
     }
 
     public String getNodeByNodeId (String node_id) {
