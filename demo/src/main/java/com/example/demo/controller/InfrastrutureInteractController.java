@@ -117,8 +117,8 @@ public class InfrastrutureInteractController {
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(value = "/nodes/{sensor_id}")
-    public void deleteSensorBySensorId(@PathVariable("sensor_id") final long sensor_id)
+    @DeleteMapping(value = "/sensors/{sensor_id}")
+    public @ResponseBody void deleteSensorBySensorId(@PathVariable("sensor_id") final long sensor_id)
     {
         sensorService.deleteSensorBySensorId(sensor_id);
     }
