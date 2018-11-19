@@ -24,6 +24,26 @@ public class NodeService {
     @Autowired
     private SensorDataRepository sensorDataRepository;
 
+    public Node updateNodeByNodeId(String nodeid, Node node) {
+        long node_id = Long.valueOf(nodeid).longValue();
+        Node nodeFromDB = nodeRepository.findById(node_id).get();
+
+        if(!node.getName().equals(nodeFromDB.getName())) {
+            nodeFromDB.setName(node.getName());
+        }
+
+        if(!node.getStatus().equals(nodeFromDB.getStatus())) {
+            nodeFromDB.setStatus(node.getStatus());
+            List<Sensor> sensors = sensorRepository.findSensorByNodeId(node_id);
+            for(Sensor sensor: sensors) {
+                sensor.setStatus(node.getStatus());
+                sensorRepository.save(sensor);
+            }
+        }
+        nodeRepository.save(nodeFromDB);
+        return nodeFromDB;
+    }
+
     public void deleteNodeByNodeId(long node_id) {
         Node node = nodeRepository.findById(node_id).get();
         if (node == null) {

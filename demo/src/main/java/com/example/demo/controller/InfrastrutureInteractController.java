@@ -40,6 +40,33 @@ public class InfrastrutureInteractController {
     private BuildingService buildingService;
 
     @CrossOrigin(origins = "*")
+    @PutMapping(value="/clusters/{cluster_id}")
+    public @ResponseBody Cluster updateClusterFromBackEnd(
+            @PathVariable String cluster_id,
+            @RequestBody Cluster cluster)
+    {
+        return clusterService.updateClusterByClusterId(cluster_id,cluster);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/nodes/{node_id}")
+    public @ResponseBody Node updateNodeByNodeId(
+            @PathVariable String node_id,
+            @RequestBody Node node)
+    {
+       return nodeService.updateNodeByNodeId(node_id, node);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/sensors/{sensor_id}")
+    public @ResponseBody Sensor updateSensorBySensorId(
+            @PathVariable String sensor_id,
+            @RequestBody Sensor sensor)
+    {
+        return sensorService.updateSensorBySensorId(sensor_id,sensor);
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping(value="/clusters")
     public void addClusterFromBackEnd(@RequestBody Cluster cluster)
     {

@@ -24,6 +24,29 @@ public class ClusterService {
     @Autowired
     private SensorDataRepository sensorDataRepository;
 
+    public Cluster updateClusterByClusterId(String clusterId, Cluster cluster) {
+        long cluster_id = Long.valueOf(clusterId).longValue();
+        Cluster clusterFromDB = clusterRepository.findById(cluster_id).get();
+        if (!cluster.getName().equals(clusterFromDB.getName())) {
+            clusterFromDB.setName(cluster.getName());
+        }
+        if (!cluster.getStatus().equals(clusterFromDB.getStatus())) {
+           clusterFromDB.setStatus(cluster.getStatus());
+           List<Node> nodes = nodeRepository.findNodeByClusterId(clusterFromDB.getId());
+           for(Node node: nodes) {
+               node.setStatus(cluster.getStatus());
+               nodeRepository.save(node);
+               List<Sensor> sensors = sensorRepository.findSensorByNodeId(node.getId());
+               for(Sensor sensor: sensors) {
+                   sensor.setStatus(cluster.getStatus());
+                   sensorRepository.save(sensor);
+               }
+           }
+        }
+        clusterRepository.save(clusterFromDB);
+        return clusterFromDB;
+    }
+
     public Cluster saveClusterToDB(Cluster cluster, String building_id, String floor_number)
     {
         long buildingId = Long.valueOf(building_id).longValue();

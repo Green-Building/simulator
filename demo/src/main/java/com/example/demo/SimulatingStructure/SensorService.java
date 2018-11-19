@@ -26,6 +26,23 @@ public class SensorService {
     @Autowired
     RoomRepository roomRepository;
 
+    public Sensor updateSensorBySensorId(String sensorId, Sensor sensor)
+    {
+        long sensor_id = Long.valueOf(sensorId).longValue();
+        Sensor sensorFromDB = sensorRepository.findById(sensor_id).get();
+
+        if(!sensor.getName().equals(sensorFromDB.getName())) {
+            sensorFromDB.setName(sensor.getName());
+        }
+
+        if(!sensor.getStatus().equals(sensorFromDB.getStatus())) {
+            sensorFromDB.setStatus(sensor.getStatus());
+        }
+
+        sensorRepository.save(sensorFromDB);
+        return sensorFromDB;
+    }
+
     public void deleteSensorBySensorId(long sensor_id) {
         Sensor sensor = sensorRepository.findById(sensor_id).get();
         if (sensor == null) {
