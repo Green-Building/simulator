@@ -68,7 +68,7 @@ public class InfrastrutureInteractController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/clusters")
-    public void addClusterFromBackEnd(@RequestBody Cluster cluster)
+    public @ResponseBody void addClusterFromBackEnd(@RequestBody Cluster cluster)
     {
         Cluster newCluster = clusterService.saveClusterToDB(cluster);
         ClientHttpRequestFactory requestFactory = new
@@ -80,7 +80,7 @@ public class InfrastrutureInteractController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/nodes")
-    public void addNodeFromBackEnd(@RequestBody Node node)
+    public @ResponseBody void addNodeFromBackEnd(@RequestBody Node node)
     {
         Node newNode = nodeService.saveNodeToDB(node);
         ClientHttpRequestFactory requestFactory = new
@@ -92,7 +92,7 @@ public class InfrastrutureInteractController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/sensors")
-    public void addSensorFromBackEnd(@RequestBody Sensor sensor)
+    public @ResponseBody void addSensorFromBackEnd(@RequestBody Sensor sensor)
     {
         Sensor newSensor = sensorService.saveSensorToDB(sensor);
         ClientHttpRequestFactory requestFactory = new
