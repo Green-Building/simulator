@@ -104,14 +104,14 @@ public class InfrastrutureInteractController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/clusters/{cluster_id}")
-    public void deleteClusterByClusterId(@PathVariable("cluster_id") final long cluster_id)
+    public @ResponseBody void deleteClusterByClusterId(@PathVariable("cluster_id") final long cluster_id)
     {
         clusterService.deleteClusterByClusterId(cluster_id);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/nodes/{node_id}")
-    public void deleteNodeByNodeId(@PathVariable("node_id") final long node_id)
+    public @ResponseBody void deleteNodeByNodeId(@PathVariable("node_id") final long node_id)
     {
         nodeService.deleteNodeByNodeId(node_id);
     }

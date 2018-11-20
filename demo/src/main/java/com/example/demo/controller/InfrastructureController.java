@@ -95,10 +95,10 @@ public class InfrastructureController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/buildings/search/location")
-    public @ResponseBody
-    Iterable<Building> searchBuidlingByLocation(@RequestParam(required = false) final String city,
-                                                @RequestParam(required = false) final String state,
-                                                @RequestParam(required = false) final String zipcode)
+    public @ResponseBody Iterable<Building> searchBuidlingByLocation(
+            @RequestParam(required = false) final String city,
+            @RequestParam(required = false) final String state,
+            @RequestParam(required = false) final String zipcode)
     {
         return buildingService.searchBuidlingByLocation(city,state,zipcode);
     }
@@ -127,8 +127,7 @@ public class InfrastructureController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/buildings")
-    public @ResponseBody
-    String addBuilding(@RequestBody Building building)
+    public @ResponseBody String addBuilding(@RequestBody Building building)
     {
         return buildingService.saveBuildingToDB(building);
     }
@@ -143,8 +142,7 @@ public class InfrastructureController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/rooms")
-    public @ResponseBody
-    String addRoom(@RequestBody Room room)
+    public @ResponseBody String addRoom(@RequestBody Room room)
     {
         return roomService.saveNodeToDB(room);
     }

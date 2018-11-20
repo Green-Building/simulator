@@ -207,8 +207,7 @@ public class SimulatorController {
     @CrossOrigin(origins = "*")
     @GetMapping("/clusters/{cluster_id}")
     //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
-    public @ResponseBody
-    String getClusterNestedByClusterID(
+    public @ResponseBody String getClusterNestedByClusterID(
             @PathVariable("cluster_id") final String cluster_id,
             @RequestParam(value = "fetch_nested", required = false) final String nestedRequirement)
     {
@@ -222,8 +221,7 @@ public class SimulatorController {
     @CrossOrigin(origins = "*")
     @GetMapping("/nodes/{node_id}")
     //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
-    public @ResponseBody
-    String getNodeNestedByNodeID(
+    public @ResponseBody String getNodeNestedByNodeID(
             @PathVariable("node_id") final String node_id,
             @RequestParam(value = "fetch_nested", required = false) final String nestedRequirement)
     {
@@ -237,8 +235,7 @@ public class SimulatorController {
     @CrossOrigin(origins = "*")
     @GetMapping("/sensors/{sensor_id}")
     //https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable
-    public @ResponseBody
-    String getSensorNestedBySensorID(
+    public @ResponseBody String getSensorNestedBySensorID(
             @PathVariable("sensor_id") final String sensor_id,
             @RequestParam(value = "fetch_nested", required = false) final String nestedRequirement)
     {
