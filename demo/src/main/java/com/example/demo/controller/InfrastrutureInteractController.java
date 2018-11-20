@@ -68,7 +68,7 @@ public class InfrastrutureInteractController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/clusters")
-    public @ResponseBody void addClusterFromBackEnd(@RequestBody Cluster cluster)
+    public @ResponseBody String addClusterFromBackEnd(@RequestBody Cluster cluster)
     {
         Cluster newCluster = clusterService.saveClusterToDB(cluster);
         ClientHttpRequestFactory requestFactory = new
@@ -76,11 +76,12 @@ public class InfrastrutureInteractController {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "http://localhost:3006/clusters";
         String result = restTemplate.postForObject(url, newCluster, String.class);
+        return result;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/nodes")
-    public @ResponseBody void addNodeFromBackEnd(@RequestBody Node node)
+    public @ResponseBody String addNodeFromBackEnd(@RequestBody Node node)
     {
         Node newNode = nodeService.saveNodeToDB(node);
         ClientHttpRequestFactory requestFactory = new
@@ -88,11 +89,12 @@ public class InfrastrutureInteractController {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "http://localhost:3006/nodes";
         String result = restTemplate.postForObject(url, newNode, String.class);
+        return result;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/sensors")
-    public @ResponseBody void addSensorFromBackEnd(@RequestBody Sensor sensor)
+    public @ResponseBody String addSensorFromBackEnd(@RequestBody Sensor sensor)
     {
         Sensor newSensor = sensorService.saveSensorToDB(sensor);
         ClientHttpRequestFactory requestFactory = new
@@ -100,6 +102,7 @@ public class InfrastrutureInteractController {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "http://localhost:3006/sensors";
         String result = restTemplate.postForObject(url, newSensor, String.class);
+        return result;
     }
 
     @CrossOrigin(origins = "*")
