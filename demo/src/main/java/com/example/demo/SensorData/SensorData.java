@@ -1,6 +1,8 @@
 package com.example.demo.SensorData;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +11,11 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @JsonPropertyOrder({
-        "sensordata_id",
+        "id",
         "sensor_id",
         "node_id",
         "cluster_id",
+        "type",
         "unit",
         "sensor_data",
         "date"
@@ -26,6 +29,7 @@ public class SensorData {
     private long sensor_id;
     private long node_id;
     private long cluster_id;
+    private String type;
     private String unit;
     private Double sensordata;
     private Date date;
@@ -62,6 +66,14 @@ public class SensorData {
         this.cluster_id = cluster_id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUnit() {
         return unit;
     }
@@ -85,6 +97,19 @@ public class SensorData {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
 }
 
 

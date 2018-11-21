@@ -1,7 +1,6 @@
 package com.example.demo.SimulatingStructure;
 
 import com.example.demo.SensorData.SensorData;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +15,6 @@ public class SensorNested {
     private String series_number;
     private Date install_time;
     private String status;
-
     private SensorData sensorData;
 
     public SensorNested(Sensor sensor, SensorData sensorData) {
