@@ -3,20 +3,11 @@ package com.example.demo.SensorData;
 import java.util.Date;
 
 public class SensorDataWithDataManager {
-    private long id;
     private long sensorId;
     private String unit;
     private Double data;
     private String type;
     private Date date;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public long getSensorId() {
         return sensorId;

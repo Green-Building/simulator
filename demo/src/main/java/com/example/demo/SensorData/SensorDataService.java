@@ -50,7 +50,6 @@ public class SensorDataService {
                 sensorData.setDate(new Date());
                 sensorData.setSensordata(Math.random()*100);
                 SensorDataWithDataManager sensorDataWithDataManager = new SensorDataWithDataManager();
-                sensorDataWithDataManager.setId(sensorData.getId());
                 sensorDataWithDataManager.setSensorId(sensorData.getSensor_id());
                 sensorDataWithDataManager.setUnit(sensorData.getUnit());
                 sensorDataWithDataManager.setData(sensorData.getSensordata());
@@ -61,8 +60,8 @@ public class SensorDataService {
                 System.out.println(sensorDataWithDataManager.toString());
             }
             //To do.....
-            url = "http://localhost:3000/sensor-data";
-            //restTemplate.postForObject(url, sensorDataResult, String.class);
+            url = "http://localhost:8080/sensor_data";
+            restTemplate.postForObject(url, sensorDataResult, String.class);
 
             try {
                 Thread.currentThread().sleep(5000);
