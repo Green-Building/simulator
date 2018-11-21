@@ -102,6 +102,7 @@ public class InfrastrutureInteractController {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "http://localhost:3006/sensors";
         String result = restTemplate.postForObject(url, newSensor, String.class);
+        sensorDataService.createSensorData(newSensor);
         return result;
     }
 

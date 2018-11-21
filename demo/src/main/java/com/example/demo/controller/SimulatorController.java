@@ -114,8 +114,13 @@ public class SimulatorController {
             HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "http://localhost:3006/sensors";
+
         String result = restTemplate.postForObject(url, sensorNew, String.class);
+
+
         sensorDataService.createSensorData(sensorNew);
+
+
         model.addAttribute("building_id",building_id);
         model.addAttribute("floor_number", floor_number);
         return "resultAfterAddDeleteNewSensor";
