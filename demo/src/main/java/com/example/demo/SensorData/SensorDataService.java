@@ -42,20 +42,27 @@ public class SensorDataService {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         String url = "";
         String result = "";
-
         Iterable<Cluster> clusters = clusterRepository.findAll();
-
         for(Cluster cluster: clusters) {
-            List<SensorData> sensorDataList = new LinkedList<>();
+            List<SensorDataWithDataManager> sensorDataResult = new LinkedList<>();
             Iterable<SensorData> sensorDataIterable = sensorDataRepository.findSensorDataByClusterId(cluster.getId());
             for(SensorData sensorData: sensorDataIterable) {
                 sensorData.setDate(new Date());
                 sensorData.setSensordata(Math.random()*100);
+                SensorDataWithDataManager sensorDataWithDataManager = new SensorDataWithDataManager();
+                sensorDataWithDataManager.setId(sensorData.getId());
+                sensorDataWithDataManager.setSensorId(sensorData.getSensor_id());
+                sensorDataWithDataManager.setUnit(sensorData.getUnit());
+                sensorDataWithDataManager.setData(sensorData.getSensordata());
+                sensorDataWithDataManager.setType(sensorData.getType());
+                sensorDataWithDataManager.setDate(sensorData.getDate());
                 sensorDataRepository.save(sensorData);
-                sensorDataList.add(sensorData);
+                sensorDataResult.add(sensorDataWithDataManager);
+                System.out.println(sensorDataWithDataManager.toString());
             }
+            //To do.....
             url = "http://localhost:3000/sensor-data";
-            //restTemplate.postForObject(url, sensorDataList, String.class);
+            //restTemplate.postForObject(url, sensorDataResult, String.class);
 
             try {
                 Thread.currentThread().sleep(5000);
