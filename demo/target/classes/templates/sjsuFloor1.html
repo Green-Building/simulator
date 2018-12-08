@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<!--
+	Miniport by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SJSU Floor One</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body class="is-preload">
+
+<!-- Nav -->
+<nav id="nav">
+    <ul class="container">
+        <li><a href="http://localhost:3005/index">Building</a></li>
+        <li><a href="#work">Floor</a></li>
+        <li><a href="#portfolio">Room</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Portfolio -->
+<article id="portfolio" class="wrapper style3">
+    <div class="container">
+        <header>
+            <h2>San Jose State University - Building 1 - Floor 1</h2>
+        </header>
+
+        <div class="row aln-center">
+            <div >
+                <article class="box style2">
+                    <h3>Floor 1 - Room 101</a></h3>
+                        <span th:switch = "${res.get(101)}" >
+                            <span th:case = -1>
+                                <img src="../../image/sjsu-101-node-0-sensors-0.png" th:src="@{/image/sjsu-101-node-0-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/add/2/1/101"><br>Add a Node</a>
+                            </span>
+                            <span th:case = 0>
+                                <img  src="../../image/sjsu-101-node-1-sensors-0.png" th:src="@{/image/sjsu-101-node-1-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/101">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/101">Add a Sensor</a>
+                            </span>
+                            <span th:case = 1>
+                                <img  src="../../image/sjsu-101-node-1-sensors-1.png" th:src="@{/image/sjsu-101-node-1-sensors-1.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/101">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/101">Add a Sensor</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/101">Delete a Sensor</a>
+                            </span>
+                            <span th:case = 2>
+                                <img  src="../../image/sjsu-101-node-1-sensors-2.png" th:src="@{/image/sjsu-101-node-1-sensors-2.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/101">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/101">Add a Sensor</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/101">Delete a Sensor</a>
+                            </span>
+                            <span th:case = 3>
+                                <img  src="../../image/sjsu-101-node-1-sensors-3.png" th:src="@{/image/sjsu-101-node-1-sensors-3.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/101">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/101">Delete a Sensor</a>
+                            </span>
+                        </span>
+                </article>
+            </div>
+
+            <div>
+                <article class="box style2">
+                    <h3>Floor 1 - Room 102</a></h3>
+                    <span th:switch = "${res.get(102)}" >
+                            <span th:case = -1>
+                                <img src="../../image/sjsu-102-node-0-sensors-0.png" th:src="@{/image/sjsu-102-node-0-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/add/2/1/102"><br>Add a Node</a>
+                            </span>
+                            <span th:case = 0>
+                                <img  src="../../image/sjsu-102-node-1-sensors-0.png" th:src="@{/image/sjsu-102-node-1-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/102">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/102">Add a Sensor</a>
+                            </span>
+                            <span th:case = 1>
+                                <img  src="../../image/sjsu-102-node-1-sensors-1.png" th:src="@{/image/sjsu-102-node-1-sensors-1.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/102">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/102">Add a Sensor</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/102">Delete a Sensor</a>
+                            </span>
+                            <span th:case = 2>
+                                <img  src="../../image/sjsu-102-node-1-sensors-2.png" th:src="@{/image/sjsu-102-node-1-sensors-2.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/102">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/102">Delete a Sensor</a>
+                            </span>
+                        </span>
+                </article>
+            </div>
+            <div>
+                <article class="box style2">
+                    <h3>Floor 1 - Room 103</a></h3>
+                    <span th:switch = "${res.get(103)}" >
+                            <span th:case = -1>
+                                <img src="../../image/sjsu-103-node-0-sensors-0.png" th:src="@{/image/sjsu-103-node-0-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/add/2/1/103"><br>Add a Node</a>
+                            </span>
+                            <span th:case = 0>
+                                <img  src="../../image/sjsu-103-node-1-sensors-0.png" th:src="@{/image/sjsu-103-node-1-sensors-0.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/103">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/103">Add a Sensor</a>
+                            </span>
+                            <span th:case = 1>
+                                <img  src="../../image/sjsu-103-node-1-sensors-1.png" th:src="@{/image/sjsu-103-node-1-sensors-1.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/103">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/add/2/1/103">Add a Sensor</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/103">Delete a Sensor</a>
+                            </span>
+                            <span th:case = 2>
+                                <img  src="../../image/sjsu-103-node-1-sensors-2.png" th:src="@{/image/sjsu-103-node-1-sensors-2.png}" alt=""/>
+                                <br>
+                                <a href="http://localhost:3005/nodes/delete/2/1/103">Delete a Node</a>
+                                <br>
+                                <a href="http://localhost:3005/sensors/delete/2/1/103">Delete a Sensor</a>
+                            </span>
+                        </span>
+                </article>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Contact -->
+<article id="contact" class="wrapper style4">
+    <div class="container medium">
+        <header>
+            <h2>Have me make stuff for you.</h2>
+            <p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <form method="post" action="#">
+                    <div class="row">
+                        <div class="col-6 col-12-small">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+                        <div class="col-6 col-12-small">
+                            <input type="text" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="col-12">
+                            <input type="text" name="subject" id="subject" placeholder="Subject" />
+                        </div>
+                        <div class="col-12">
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><input type="submit" value="Send Message" /></li>
+                                <li><input type="reset" value="Clear Form" class="alt" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <hr />
+                <h3>Find me on ...</h3>
+                <ul class="social">
+                    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+                    <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
+                    <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+                    <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+                    <!--
+                    <li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
+                    <li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li>
+                    <li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
+                    <li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
+                    <li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
+                    <li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
+                    <li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
+                    <li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
+                    <li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
+                    -->
+                </ul>
+                <hr />
+            </div>
+        </div>
+        <footer>
+            <ul id="copyright">
+                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </footer>
+    </div>
+</article>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
