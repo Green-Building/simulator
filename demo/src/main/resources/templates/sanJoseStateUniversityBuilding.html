@@ -16,7 +16,7 @@
 <!-- Nav -->
 <nav id="nav">
     <ul class="container">
-        <li><a href="http://localhost:3005/index">Building</a></li>
+        <li><a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/index">Building</a></li>
         <li><a href="#work">Floor</a></li>
         <li><a href="#portfolio">Room</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -41,11 +41,11 @@
                     <h3>Floor One</h3>
                 </section>
                 <span th:if = "${matchedRes.get(1)}">
-                    <a href="http://localhost:3005/clusters/delete/2/1" class="button large scrolly">Delete a Cluster</a>
-                    <a href="http://localhost:3005/buildings/2/floors/1" class="button large scrolly">View Rooms on Floor 1</a>
+                    <a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/clusters/delete/2/1" class="button large scrolly">Delete a Cluster</a>
+                    <a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/buildings/2/floors/1" class="button large scrolly">View Rooms on Floor 1</a>
                 </span>
                 <span th:unless = "${matchedRes.get(1)}">
-                    <a href="http://localhost:3005/clusters/add/2/1" class="button large scrolly"> Add a Cluster</a>
+                    <a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/clusters/add/2/1" class="button large scrolly"> Add a Cluster</a>
                 </span>
                 <br>
                 <br>
@@ -62,11 +62,11 @@
                     <h3>Floor Two</h3>
                 </section>
                 <span th:if = "${matchedRes.get(2)}">
-                    <a href="http://localhost:3005/clusters/delete/2/2" class="button large scrolly">Delete a Cluster</a>
+                    <a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/clusters/delete/2/2" class="button large scrolly">Delete a Cluster</a>
                      <a href="#portfolio" class="button large scrolly" method = "post">View Smart Node on Floor 2</a>
                 </span>
                 <span th:unless = "${matchedRes.get(2)}">
-                    <a href="http://localhost:3005/clusters/add/2/2" class="button large scrolly" method = "post"> Add a Cluster</a>
+                    <a href="http://ec2-54-210-137-62.compute-1.amazonaws.com/clusters/add/2/2" class="button large scrolly" method = "post"> Add a Cluster</a>
                 </span>
             </div>
         </div>
