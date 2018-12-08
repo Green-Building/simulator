@@ -24,7 +24,7 @@ public class ScheduledUploadData {
 
     private static final SimpleDateFormat dateFormat =  new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 10000)
     public void reportSensorDataToServer() {
         System.out.println("Time now:" + dateFormat.format(new Date()));
         sensorDataService.updateSensorDateSchedule();
