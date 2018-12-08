@@ -60,8 +60,8 @@ public class SensorDataService {
                 System.out.println(sensorDataWithDataManager.toString());
             }
             //To do.....
-            url = "http://localhost:8080/sensor_data";
-            restTemplate.postForObject(url, sensorDataResult, String.class);
+            //url = "http://localhost:8080/sensor_data";
+            //restTemplate.postForObject(url, sensorDataResult, String.class);
 
             try {
                 Thread.currentThread().sleep(5000);
