@@ -16,7 +16,7 @@
 <!-- Nav -->
 <nav id="nav">
     <ul class="container">
-        <li><a href="http://ec2-54-210-137-62.compute-1.amazonaws.com:3005/index">Building</a></li>
+        <li><a href="http://simulator-load-balancer-1440931307.us-east-1.elb.amazonaws.com/index">Building</a></li>
         <li><a href="#work">Floor</a></li>
         <li><a href="#portfolio">Room</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -28,7 +28,7 @@
     <div class="container">
         <header>
             <h2>Succeed!</h2>
-            <p><a th:href="@{'http://ec2-54-210-137-62.compute-1.amazonaws.com:3005/buildings/'+${building_id}+'/floors/'+${floor_number}}">Go back to the Room</a></p>
+            <p><a th:href="@{'http://simulator-load-balancer-1440931307.us-east-1.elb.amazonaws.com/buildings/'+${building_id}+'/floors/'+${floor_number}}">Go back to the Room</a></p>
         </header>
     </div>
 </article>
