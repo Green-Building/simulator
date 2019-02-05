@@ -10,6 +10,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,6 +35,15 @@ public class SensorDataService {
     SensorDataRepository sensorDataRepository;
     @Autowired
     ClusterRepository clusterRepository;
+
+    @Value("${config.data.infra_manager.ip}")
+    private String INFRA_MANAGER_IP;
+    @Value("${config.data.infra_manager.port}")
+    private String INFRA_MANAGER_PORT;
+    @Value("${config.data.data_manager.ip}")
+    private String DATA_MANAGER_IP;
+    @Value("${config.data.data_manager.port}")
+    private String DATA_MANAGER_PORT;
 
     public void updateSensorDateSchedule()
     {
@@ -60,8 +70,8 @@ public class SensorDataService {
                 System.out.println(sensorDataWithDataManager.toString());
             }
             //To do.....
-            //url = "http://localhost:8080/sensor_data";
-            //restTemplate.postForObject(url, sensorDataResult, String.class);
+            url = "http://"+ DATA_MANAGER_IP+ ":" +DATA_MANAGER_PORT+"/sensor_data";
+            restTemplate.postForObject(url, sensorDataResult, String.class);
 
             try {
                 Thread.currentThread().sleep(5000);

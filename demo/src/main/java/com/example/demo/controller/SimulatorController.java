@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 public class SimulatorController {
@@ -36,6 +37,15 @@ public class SimulatorController {
     private FloorService floorService;
     @Autowired
     private BuildingService buildingService;
+
+    @Value("${config.data.infra_manager.ip}")
+    private String INFRA_MANAGER_IP;
+    @Value("${config.data.infra_manager.port}")
+    private String INFRA_MANAGER_PORT;
+    @Value("${config.data.data_manager.ip}")
+    private String DATA_MANAGER_IP;
+    @Value("${config.data.data_manager.port}")
+    private String DATA_MANAGER_PORT;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/clusters/add/{building_id}/{floor_number}")
@@ -94,7 +104,7 @@ public class SimulatorController {
         ClientHttpRequestFactory requestFactory = new
              HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/clusters";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/clusters";
         String result = restTemplate.postForObject(url, newCluster, String.class);
         model.addAttribute("buildingId", newCluster.getBuilding_id());
         return "resultAfterAddDeleteNewCluster";
@@ -113,7 +123,7 @@ public class SimulatorController {
         ClientHttpRequestFactory requestFactory = new
             HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/sensors";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/sensors";
 
         String result = restTemplate.postForObject(url, sensorNew, String.class);
 
@@ -143,7 +153,7 @@ public class SimulatorController {
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
-        String url = "http://localhost:3006/nodes";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/nodes";
         String result = restTemplate.postForObject(url, nodeNew, String.class);
 
         return "resultAfterAddDeleteNewSensor";
@@ -162,7 +172,7 @@ public class SimulatorController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/clusters/" + cluster_id+"?from=1";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/clusters/" + cluster_id+"?from=1";
         restTemplate.delete(url);
         long buildingId = Long.valueOf(building_id).longValue();
         model.addAttribute("buildingId", buildingId);
@@ -181,7 +191,7 @@ public class SimulatorController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/nodes/"+node_id+"?from=1";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/nodes/"+node_id+"?from=1";
         restTemplate.delete(url);
         model.addAttribute("building_id", building_id);
         model.addAttribute("floor_number",floor_number);
@@ -204,7 +214,7 @@ public class SimulatorController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/sensors/" + sensor_id+"?from=1";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/sensors/" + sensor_id+"?from=1";
         restTemplate.delete(url);
         return "resultAfterAddDeleteNewSensor";
     }

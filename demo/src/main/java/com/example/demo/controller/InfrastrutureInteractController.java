@@ -15,6 +15,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 public class InfrastrutureInteractController {
@@ -38,6 +39,15 @@ public class InfrastrutureInteractController {
     private FloorService floorService;
     @Autowired
     private BuildingService buildingService;
+
+    @Value("${config.data.infra_manager.ip}")
+    private String INFRA_MANAGER_IP;
+    @Value("${config.data.infra_manager.port}")
+    private String INFRA_MANAGER_PORT;
+    @Value("${config.data.data_manager.ip}")
+    private String DATA_MANAGER_IP;
+    @Value("${config.data.data_manager.port}")
+    private String DATA_MANAGER_PORT;
 
     @CrossOrigin(origins = "*")
     @PutMapping(value="/clusters/{cluster_id}")
@@ -74,7 +84,7 @@ public class InfrastrutureInteractController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/clusters";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/clusters";
         String result = restTemplate.postForObject(url, newCluster, String.class);
         return result;
     }
@@ -87,7 +97,7 @@ public class InfrastrutureInteractController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/nodes";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/nodes";
         String result = restTemplate.postForObject(url, newNode, String.class);
         return result;
     }
@@ -100,7 +110,7 @@ public class InfrastrutureInteractController {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        String url = "http://localhost:3006/sensors";
+        String url = "http://"+ INFRA_MANAGER_IP+ ":" +INFRA_MANAGER_PORT+"/sensors";
         String result = restTemplate.postForObject(url, newSensor, String.class);
         sensorDataService.createSensorData(newSensor);
         return result;
